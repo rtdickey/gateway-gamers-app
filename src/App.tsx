@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 
-import { Session } from "@supabase/supabase-js";
 import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { Session } from "@supabase/supabase-js";
+
+import { Button } from "./components/ui/button";
 
 import useSupabase from "./hooks/useSupabase";
 
 import "./App.css";
-import { ThemeMinimal, ThemeSupa } from "@supabase/auth-ui-shared";
 
 function App() {
   const { supabase } = useSupabase();
   const [session, setSession] = useState<Session | null>(null);
-  // const [shelves, setShelves] = useState<any[] | null>([]);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -27,17 +28,6 @@ function App() {
     return () => subscription.unsubscribe();
   }, []);
 
-  // useEffect(() => {
-  //   getShelves();
-  // }, []);
-
-  // async function getShelves() {
-  //   const { data } = await supabase.from("shelves").select();
-  //   setShelves(data);
-  // }
-
-  useEffect(() => {});
-
   return (
     <div className="App">
       {!session ? (
@@ -51,7 +41,13 @@ function App() {
       ) : (
         <div>
           <h1>Welcome, {session.user?.email}</h1>
-          <button onClick={() => supabase.auth.signOut()}>Sign Out</button>
+          <Button
+            onClick={() => {
+              supabase.auth.signOut();
+            }}
+          >
+            Sign Out
+          </Button>
         </div>
       )}
 
