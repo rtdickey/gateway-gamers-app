@@ -2,27 +2,29 @@ import { useEffect, useState } from "react";
 
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { Session } from "@supabase/supabase-js";
+import { createClient, Session } from "@supabase/supabase-js";
 
 import { Button } from "./components/ui/button";
 
-import useSupabase from "./hooks/useSupabase";
-
 import "./App.css";
 
+const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL!,
+  process.env.REACT_APP_SUPABASE_ANON_KEY!
+);
+
 function App() {
-  const { supabase } = useSupabase();
-  const [session, setSession] = useState<Session | null>(null);
+  const [currentSession, setCurrentSession] = useState<Session | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
+      setCurrentSession(session);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
-      setSession(session);
+      setCurrentSession(session);
     });
 
     return () => subscription.unsubscribe();
@@ -30,7 +32,7 @@ function App() {
 
   return (
     <div className="App">
-      {!session ? (
+      {!currentSession ? (
         <div style={{ width: "300px", margin: "0 auto", marginTop: "4em" }}>
           <Auth
             supabaseClient={supabase}
@@ -40,7 +42,7 @@ function App() {
         </div>
       ) : (
         <div>
-          <h1>Welcome, {session.user?.email}</h1>
+          <h1>Welcome, {currentSession.user?.email}</h1>
           <Button
             onClick={() => {
               supabase.auth.signOut();
