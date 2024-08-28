@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { createClient, Session } from "@supabase/supabase-js";
 
-import { Button } from "./components/ui/button";
-
 import "./App.css";
+import Login from "./pages/Login/Login";
+import Keep from "./pages/Keep";
 
 const supabase = createClient(
   process.env.REACT_APP_SUPABASE_URL!,
@@ -15,6 +13,10 @@ const supabase = createClient(
 
 function App() {
   const [currentSession, setCurrentSession] = useState<Session | null>(null);
+
+  const handleSignOut = () => {
+    supabase.auth.signOut();
+  };
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -33,24 +35,9 @@ function App() {
   return (
     <div className="App">
       {!currentSession ? (
-        <div style={{ width: "300px", margin: "0 auto", marginTop: "4em" }}>
-          <Auth
-            supabaseClient={supabase}
-            providers={["google"]}
-            appearance={{ theme: ThemeSupa }}
-          />
-        </div>
+        <Login supabase={supabase} />
       ) : (
-        <div>
-          <h1>Welcome, {currentSession.user?.email}</h1>
-          <Button
-            onClick={() => {
-              supabase.auth.signOut();
-            }}
-          >
-            Sign Out
-          </Button>
-        </div>
+        <Keep user={currentSession.user} handleSignOut={handleSignOut} />
       )}
 
       {/* <ul>{shelves?.map((shelf) => <li key={shelf.id}>{shelf.name}</li>)}</ul> */}
