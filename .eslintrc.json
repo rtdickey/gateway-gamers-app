@@ -31,7 +31,7 @@
                 "newlines-between": "always",
                 "alphabetize": {
                     "order": "asc",
-                    "caseInsentive": true
+                    "caseInsensitive": true
                 }
             }
         ],
