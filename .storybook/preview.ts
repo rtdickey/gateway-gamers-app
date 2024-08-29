@@ -1,5 +1,8 @@
 import type { Preview } from "@storybook/react";
 
+import "tailwindcss/tailwind.css";
+import "../src/gatewaygamers.css";
+
 const preview: Preview = {
   parameters: {
     controls: {
