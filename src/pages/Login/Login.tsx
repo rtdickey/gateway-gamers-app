@@ -12,7 +12,25 @@ const Login = ({ supabase }: LoginProps) => {
       <Auth
         supabaseClient={supabase}
         providers={["google"]}
-        appearance={{ theme: ThemeSupa }}
+        appearance={{
+          theme: ThemeSupa,
+          variables: {
+            default: {
+              colors: {
+                brand: "hsl(15.49 100% 64.31%)",
+                brandAccent: "hsl(15.49 100% 64.31% / .9)",
+                brandButtonText: "hsl(0, 0%, 0%)",
+              },
+            },
+            dark: {
+              colors: {
+                brandButtonText: "white",
+                defaultButtonBackground: "hsl(210 40% 98%)",
+                defaultButtonBackgroundHover: "hsl(210 40% 98% / .9)",
+              },
+            },
+          },
+        }}
       />
     </div>
   );

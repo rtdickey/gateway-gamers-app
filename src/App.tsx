@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { createClient, Session } from "@supabase/supabase-js";
+import { Session } from "@supabase/supabase-js";
 
+import { supabase } from "./Supabase";
 import "./App.css";
 import Login from "./pages/Login/Login";
 import Keep from "./pages/Keep";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
-
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL!,
-  process.env.REACT_APP_SUPABASE_ANON_KEY!
-);
 
 function App() {
   const [currentSession, setCurrentSession] = useState<Session | null>(null);
