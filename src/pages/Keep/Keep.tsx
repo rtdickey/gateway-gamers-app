@@ -1,4 +1,4 @@
-import Button from "../../components/Button";
+import Button from "components/Button";
 import { User } from "@supabase/supabase-js";
 
 interface KeepProps {

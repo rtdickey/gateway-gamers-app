@@ -4,10 +4,10 @@ import { Session } from "@supabase/supabase-js";
 
 import { supabase } from "./Supabase";
 import "./App.css";
-import Login from "./pages/Login/Login";
-import Keep from "./pages/Keep";
+import Login from "pages/Login";
+import Keep from "pages/Keep";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "pages/Home";
 
 function App() {
   const [currentSession, setCurrentSession] = useState<Session | null>(null);
