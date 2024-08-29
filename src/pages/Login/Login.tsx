@@ -1,9 +1,11 @@
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { SupabaseClient } from "@supabase/supabase-js";
+import React from "react"
+
+import { Auth } from "@supabase/auth-ui-react"
+import { ThemeSupa } from "@supabase/auth-ui-shared"
+import { SupabaseClient } from "@supabase/supabase-js"
 
 interface LoginProps {
-  supabase: SupabaseClient;
+  supabase: SupabaseClient
 }
 
 const Login = ({ supabase }: LoginProps) => {
@@ -33,7 +35,7 @@ const Login = ({ supabase }: LoginProps) => {
         }}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

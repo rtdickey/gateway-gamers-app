@@ -1,24 +1,25 @@
-import { Session } from "@supabase/supabase-js";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react"
+
+import { Session } from "@supabase/supabase-js"
+import { useNavigate } from "react-router-dom"
 
 interface HomeProps {
-  session: Session | null;
+  session: Session | null
 }
 
 const Home = ({ session }: HomeProps) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   useEffect(() => {
     if (!session) {
-      navigate("/Login");
+      navigate("/Login")
     }
-  }, [session, navigate]);
+  }, [session, navigate])
 
   return (
     <div>
       <h1>Welcome to Gateway Gamers</h1>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
