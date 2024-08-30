@@ -1,9 +1,12 @@
-import Button from "../../components/Button";
-import { User } from "@supabase/supabase-js";
+import React from "react"
+
+import { User } from "@supabase/supabase-js"
+
+import Button from "components/Button"
 
 interface KeepProps {
-  user: User;
-  handleSignOut: () => void;
+  user: User
+  handleSignOut: () => void
 }
 
 const Keep = ({ user, handleSignOut }: KeepProps) => {
@@ -12,7 +15,7 @@ const Keep = ({ user, handleSignOut }: KeepProps) => {
       <h1>Welcome, {user?.email}</h1>
       <Button onClick={handleSignOut}>Sign Out</Button>
     </div>
-  );
-};
+  )
+}
 
-export default Keep;
+export default Keep

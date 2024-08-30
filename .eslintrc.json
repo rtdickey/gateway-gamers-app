@@ -1,0 +1,41 @@
+{
+  "extends": ["react-app", "react-app/jest", "plugin:react/recommended", "plugin:import/typescript"],
+  "plugins": ["import"],
+  //"ignorePatterns": ["ckeditor5/*"],
+  "rules": {
+    "semi": ["error", "never"],
+    "no-duplicate-imports": "error",
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
+    "import/first": "error",
+    "import/export": "warn",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }],
+    "import/no-unresolved": "warn",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "testing-library/no-node-access": ["warn", { "allowContainerFirstChild": true }]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
+}
