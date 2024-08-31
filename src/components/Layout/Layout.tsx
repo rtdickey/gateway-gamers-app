@@ -1,14 +1,20 @@
 import React from "react"
 
+import { Session } from "@supabase/supabase-js"
 import { Outlet } from "react-router-dom"
 
-import "gatewaygamers.css"
 import Nav from "components/Nav"
 
-const Layout = () => {
+import "gatewaygamers.css"
+
+interface LoginProps {
+  session: Session | null
+}
+
+const Layout = ({ session }: LoginProps) => {
   return (
     <div className='flex'>
-      <Nav />
+      <Nav session={session} />
       <div className='p-7 text-2xl flex-1 h-screen'>
         <Outlet />
       </div>

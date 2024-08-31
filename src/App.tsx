@@ -43,13 +43,12 @@ function App() {
       ) : (
         <>
           <Routes>
-            <Route path='/' element={<Layout />}>
+            <Route path='/' element={<Layout session={currentSession} />}>
               <Route index element={<Home session={currentSession} />} />
               <Route path='Login' element={<Login supabase={supabase} />} />
               <Route path='GameKeep' element={<Keep user={currentSession.user} handleSignOut={handleSignOut} />} />
             </Route>
           </Routes>
-          <Nav />
         </>
       )}
 

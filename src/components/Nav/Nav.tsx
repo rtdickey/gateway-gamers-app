@@ -1,5 +1,7 @@
 import React, { useMemo } from "react"
 
+import { Session } from "@supabase/supabase-js"
+
 import useShelves from "hooks/useShelves"
 
 interface MenuItem {
@@ -9,7 +11,11 @@ interface MenuItem {
   gap: boolean
 }
 
-const Nav = () => {
+interface NavProps {
+  session: Session | null
+}
+
+const Nav = ({ session }: NavProps) => {
   const { shelves } = useShelves()
   const [open, setOpen] = React.useState(true)
 
