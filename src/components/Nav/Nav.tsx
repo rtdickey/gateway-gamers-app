@@ -46,12 +46,12 @@ const Nav = ({ session }: NavProps) => {
     <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-accent relative`}>
       <img
         src='./assets/control.png'
-        alt='logo'
+        alt='menu toggle'
         className={`absolute cursor-pointer -right-3 top-9 w-7 border-2 border-accent rounded-full ${!open && "rotate-180"}`}
         onClick={handleMenuToggleOnClick}
       />
       <div className='flex gap-x-4 items-center'>
-        <img src='./assets/gateway-gamers-logo.png' className={`w-10 cursor-pointer duration-500`} />
+        <img src='./assets/gateway-gamers-logo.png' alt='logo' className={`w-10 cursor-pointer duration-500`} />
         <h1 className={`origin-left text-medium text-xl duration-300 ${!open && "scale-0"}`}>Gateway Gamers</h1>
       </div>
       <ul className='pt-6'>

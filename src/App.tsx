@@ -4,7 +4,6 @@ import { Session } from "@supabase/supabase-js"
 import { Routes, Route, useNavigate } from "react-router-dom"
 
 import Layout from "components/Layout"
-import Nav from "components/Nav"
 import Home from "pages/Home"
 import Keep from "pages/Keep"
 import Login from "pages/Login"
