@@ -61,9 +61,9 @@
 
 @layer base {
   * {
-    @apply tw-border-border;
+    @apply border-border;
   }
   body {
-    @apply tw-bg-background tw-text-foreground dark:tw-bg-background dark:tw-text-foreground;
+    @apply bg-background text-foreground dark:bg-background dark:text-foreground;
   }
 }
