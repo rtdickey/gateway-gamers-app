@@ -4,7 +4,7 @@ import type { Preview } from "@storybook/react"
 import { MemoryRouter } from "react-router-dom"
 
 import "tailwindcss/tailwind.css"
-import "../src/gatewaygamers.css"
+import "gatewaygamers.css"
 
 export const decorators = [
   Story => (

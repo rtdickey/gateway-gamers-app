@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import { Session } from "@supabase/supabase-js"
 import { Routes, Route, useNavigate } from "react-router-dom"
 
+import Layout from "components/Layout"
 import Nav from "components/Nav"
 import Home from "pages/Home"
 import Keep from "pages/Keep"
@@ -42,9 +43,11 @@ function App() {
       ) : (
         <>
           <Routes>
-            <Route path='Login' element={<Login supabase={supabase} />} />
-            <Route path='Keep' element={<Keep user={currentSession.user} handleSignOut={handleSignOut} />} />
-            <Route path='/' element={<Home session={currentSession} />} />
+            <Route path='/' element={<Layout />}>
+              <Route index element={<Home session={currentSession} />} />
+              <Route path='Login' element={<Login supabase={supabase} />} />
+              <Route path='GameKeep' element={<Keep user={currentSession.user} handleSignOut={handleSignOut} />} />
+            </Route>
           </Routes>
           <Nav />
         </>
