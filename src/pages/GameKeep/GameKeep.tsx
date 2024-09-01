@@ -5,12 +5,12 @@ import { User } from "@supabase/supabase-js"
 import Button from "components/Button"
 import useShelves from "hooks/useShelves"
 
-interface KeepProps {
+interface GameKeepProps {
   user: User
   handleSignOut: () => void
 }
 
-const Keep = ({ user, handleSignOut }: KeepProps) => {
+const GameKeep = ({ user, handleSignOut }: GameKeepProps) => {
   const { shelves } = useShelves()
 
   return (
@@ -36,4 +36,4 @@ const Keep = ({ user, handleSignOut }: KeepProps) => {
   )
 }
 
-export default Keep
+export default GameKeep
