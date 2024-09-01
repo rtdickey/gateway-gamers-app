@@ -3,7 +3,7 @@
   "plugins": ["import"],
   //"ignorePatterns": ["ckeditor5/*"],
   "rules": {
-    "react/no-unknown-property": ["error", { "ignore": ["tsx"] }],
+    "react/no-unknown-property": ["error", { "ignore": ["tsx, class, css"] }],
     "semi": ["error", "never"],
     "no-duplicate-imports": "error",
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
