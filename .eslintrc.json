@@ -3,6 +3,7 @@
   "plugins": ["import"],
   //"ignorePatterns": ["ckeditor5/*"],
   "rules": {
+    "react/no-unknown-property": ["warn", { "ignore": ["class"] }],
     "semi": ["error", "never"],
     "no-duplicate-imports": "error",
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
