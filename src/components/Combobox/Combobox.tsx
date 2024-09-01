@@ -17,11 +17,24 @@ interface ComboboxProps {
   label?: string
   className?: string
   allowSearch?: boolean
+  handleSelectCallback: (value: string) => void
 }
 
-const Combobox: React.FC<ComboboxProps> = ({ label = "Select option", options, className, allowSearch = false }) => {
+const Combobox: React.FC<ComboboxProps> = ({
+  label = "Select option",
+  options,
+  className,
+  allowSearch = false,
+  handleSelectCallback,
+}) => {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
+
+  const handleSelect = (currentValue: string) => {
+    setValue(currentValue === value ? "" : currentValue)
+    setOpen(false)
+    handleSelectCallback(currentValue)
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -38,14 +51,7 @@ const Combobox: React.FC<ComboboxProps> = ({ label = "Select option", options, c
             <CommandEmpty>No option found.</CommandEmpty>
             <CommandGroup>
               {options.map(option => (
-                <CommandItem
-                  key={option.value}
-                  value={option.value}
-                  onSelect={currentValue => {
-                    setValue(currentValue === value ? "" : currentValue)
-                    setOpen(false)
-                  }}
-                >
+                <CommandItem key={option.value} value={option.value} onSelect={handleSelect}>
                   <Check className={cn("mr-2 h-4 w-4", value === option.value ? "opacity-100" : "opacity-0")} />
                   {option.label}
                 </CommandItem>

@@ -1,8 +1,10 @@
 import React, { useMemo } from "react"
 
 import { Session } from "@supabase/supabase-js"
+import { useNavigate } from "react-router-dom"
 
 import Combobox, { ComboboxOptions } from "components/Combobox"
+import Shelf from "components/GameKeep/Shelf"
 import useShelves from "hooks/useShelves"
 
 interface GameKeepProps {
@@ -11,6 +13,7 @@ interface GameKeepProps {
 
 const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
   const { shelves } = useShelves()
+  const navigate = useNavigate()
 
   const shelfOptions = useMemo(() => {
     if (!!shelves.data) {
@@ -25,17 +28,16 @@ const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
     return []
   }, [shelves.data])
 
+  const handleSelectCallback = (value: string) => {
+    navigate(`/GameKeep/Shelf/${value}`)
+  }
+
   return (
     <>
       {shelves.data && !shelves.error && (
         <div className='mt-5'>
-          <h2>Your Shelves</h2>
-          <ul>
-            {shelves.data.map(shelf => (
-              <li key={shelf.id}>{shelf.name}</li>
-            ))}
-          </ul>
-          <Combobox options={shelfOptions} label='Select a shelf' />
+          <Combobox options={shelfOptions} label='Select a shelf' handleSelectCallback={handleSelectCallback} />
+          <Shelf />
         </div>
       )}
     </>
