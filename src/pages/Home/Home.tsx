@@ -3,7 +3,6 @@ import React, { useEffect } from "react"
 import { Session } from "@supabase/supabase-js"
 import { useNavigate } from "react-router-dom"
 
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "components/Card"
 import Overview from "components/Overview"
 
 interface HomeProps {
