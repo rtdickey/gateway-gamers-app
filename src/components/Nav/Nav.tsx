@@ -1,6 +1,6 @@
 import React from "react"
 
-import { faDice, faHome, faPerson, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faDice, faHome, faUser } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Session } from "@supabase/supabase-js"
 
