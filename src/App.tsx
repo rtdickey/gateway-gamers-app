@@ -4,9 +4,10 @@ import { Session } from "@supabase/supabase-js"
 import { Routes, Route, useNavigate } from "react-router-dom"
 
 import Layout from "components/Layout"
+import GameKeep from "pages/GameKeep"
 import Home from "pages/Home"
-import Keep from "pages/Keep"
 import Login from "pages/Login"
+import Profile from "pages/Profile"
 
 import { supabase } from "./Supabase"
 
@@ -45,7 +46,10 @@ function App() {
             <Route path='/' element={<Layout session={currentSession} />}>
               <Route index element={<Home session={currentSession} />} />
               <Route path='Login' element={<Login supabase={supabase} />} />
-              <Route path='GameKeep' element={<Keep user={currentSession.user} handleSignOut={handleSignOut} />} />
+              <Route path='GameKeep' element={<GameKeep session={currentSession} />}>
+                <Route path='Shelf/:id' />
+              </Route>
+              <Route path='Profile' element={<Profile session={currentSession} handleSignOut={handleSignOut} />} />
             </Route>
           </Routes>
         </>

@@ -11,7 +11,7 @@ const shelvesApi = createApi({
   endpoints: builder => ({
     getShelves: builder.query<Shelf[], void>({
       queryFn: async () => {
-        const { data, error } = await supabase.from("shelves").select("id, name")
+        const { data, error } = await supabase.from("Shelves").select("id, name")
 
         if (error) {
           return { error }
