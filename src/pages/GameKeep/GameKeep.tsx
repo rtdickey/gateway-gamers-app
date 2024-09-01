@@ -34,15 +34,20 @@ const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
   return (
     <>
       {shelves.data && !shelves.error && (
-        <div className='mt-5'>
-          <Combobox
-            options={shelfOptions}
-            label='Select a shelf'
-            handleSelectCallback={handleSelectCallback}
-            selectedOption={selectedShelf}
-          />
+        <>
+          <h1>The Game Keep</h1>
+          <hr className='mt-2 mb-2' />
+          <div className='flex mt-5 mb-5 text-sm items-center gap-x-4 font-semibold'>
+            <label>Shelf: </label>
+            <Combobox
+              options={shelfOptions}
+              label='Select a shelf'
+              handleSelectCallback={handleSelectCallback}
+              selectedOption={selectedShelf}
+            />
+          </div>
           <Shelf shelfId={selectedShelf} />
-        </div>
+        </>
       )}
     </>
   )
