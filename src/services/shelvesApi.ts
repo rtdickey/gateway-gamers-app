@@ -6,6 +6,7 @@ import { Shelf } from "types"
 import { supabaseBaseQuery } from "./supabaseBaseQuery"
 
 const shelvesApi = createApi({
+  reducerPath: "shelvesApi",
   baseQuery: supabaseBaseQuery(),
   tagTypes: ["Shelf"],
   endpoints: builder => ({
