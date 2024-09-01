@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 import { Session } from "@supabase/supabase-js"
 import { useNavigate } from "react-router-dom"
 
-import About from "components/About"
+// import About from "components/About"
 
 interface HomeProps {
   session: Session | null
@@ -19,7 +19,8 @@ const Home = ({ session }: HomeProps) => {
 
   return (
     <div>
-      <About />
+      Welcome to Gateway Gamers
+      {/* <About /> */}
     </div>
   )
 }
