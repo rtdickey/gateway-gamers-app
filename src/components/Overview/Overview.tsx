@@ -3,7 +3,7 @@ import React from "react"
 import { faDiceOne, faDiceTwo, faDiceThree, faDiceFour } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-const About: React.FC = () => {
+const Overview: React.FC = () => {
   return (
     <div style={{ fontSize: "1.3rem", lineHeight: "30pt" }}>
       <p className='mt-4'>
@@ -72,4 +72,4 @@ const About: React.FC = () => {
   )
 }
 
-export default About
+export default Overview
