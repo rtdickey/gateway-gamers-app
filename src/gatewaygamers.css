@@ -799,6 +799,10 @@ body:is(.dark *) {
   width: 100%;
 }
 
+.w-40 {
+  width: 10rem;
+}
+
 .max-w-lg {
   max-width: 32rem;
 }
