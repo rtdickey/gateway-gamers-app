@@ -1,7 +1,6 @@
 {
   "extends": ["react-app", "react-app/jest", "plugin:react/recommended", "plugin:import/typescript"],
   "plugins": ["import"],
-  //"ignorePatterns": ["ckeditor5/*"],
   "rules": {
     "semi": ["error", "never"],
     "no-duplicate-imports": "error",

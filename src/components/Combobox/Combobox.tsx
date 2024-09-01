@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 
 import { Check, ChevronsUpDown } from "lucide-react"
 
@@ -15,20 +15,20 @@ export interface ComboboxOptions {
 interface ComboboxProps {
   options: ComboboxOptions[]
   label?: string
-  className?: string
   allowSearch?: boolean
   handleSelectCallback: (value: string) => void
+  selectedOption?: string
 }
 
 const Combobox: React.FC<ComboboxProps> = ({
   label = "Select option",
   options,
-  className,
+  selectedOption,
   allowSearch = false,
   handleSelectCallback,
 }) => {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  const [value, setValue] = React.useState(selectedOption ?? "")
 
   const handleSelect = (currentValue: string) => {
     setValue(currentValue === value ? "" : currentValue)

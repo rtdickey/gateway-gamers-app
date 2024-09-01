@@ -46,9 +46,7 @@ function App() {
             <Route path='/' element={<Layout session={currentSession} />}>
               <Route index element={<Home session={currentSession} />} />
               <Route path='Login' element={<Login supabase={supabase} />} />
-              <Route path='GameKeep' element={<GameKeep session={currentSession} />}>
-                <Route path='Shelf/:id' />
-              </Route>
+              <Route path='GameKeep' element={<GameKeep session={currentSession} />} />
               <Route path='Profile' element={<Profile session={currentSession} handleSignOut={handleSignOut} />} />
             </Route>
           </Routes>

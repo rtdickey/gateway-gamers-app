@@ -4,6 +4,8 @@ import { faDice, faHome, faUser } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Session } from "@supabase/supabase-js"
 
+import menuToggle from "assets/control.png"
+import logo from "assets/gateway-gamers-logo.png"
 import NavItem from "components/NavItem"
 
 interface NavProps {
@@ -27,13 +29,13 @@ const Nav = ({ session }: NavProps) => {
       <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-accent relative`}></div>
       <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-accent fixed`}>
         <img
-          src='./assets/control.png'
+          src={menuToggle}
           alt='menu toggle'
           className={`absolute cursor-pointer -right-3 top-9 w-7 border-2 border-accent rounded-full ${!open && "rotate-180"}`}
           onClick={handleMenuToggleOnClick}
         />
         <div className='flex gap-x-4 items-center'>
-          <img src='./assets/gateway-gamers-logo.png' alt='logo' className={`w-10 cursor-pointer duration-500`} />
+          <img src={logo} alt='logo' className={`w-10 cursor-pointer duration-500`} />
           <h1 className={`origin-left text-medium text-xl duration-300 ${!open && "scale-0"}`}>Gateway Gamers</h1>
         </div>
         <ul className='pt-6'>
