@@ -1,8 +1,8 @@
-import React from "react"
+import React, { useMemo } from "react"
 
 import { Session } from "@supabase/supabase-js"
 
-import Combobox from "components/Combobox"
+import Combobox, { ComboboxOptions } from "components/Combobox"
 import useShelves from "hooks/useShelves"
 
 interface GameKeepProps {
@@ -11,6 +11,19 @@ interface GameKeepProps {
 
 const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
   const { shelves } = useShelves()
+
+  const shelfOptions = useMemo(() => {
+    if (!!shelves.data) {
+      return shelves.data?.map(shelf => {
+        return {
+          value: shelf.id.toString(),
+          label: shelf.name,
+        } as ComboboxOptions
+      })
+    }
+
+    return []
+  }, [shelves.data])
 
   return (
     <>
@@ -22,7 +35,7 @@ const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
               <li key={shelf.id}>{shelf.name}</li>
             ))}
           </ul>
-          <Combobox />
+          <Combobox options={shelfOptions} label='Select a shelf' />
         </div>
       )}
     </>
