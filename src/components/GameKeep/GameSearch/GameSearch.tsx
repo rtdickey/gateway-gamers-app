@@ -4,17 +4,16 @@ import { skipToken } from "@reduxjs/toolkit/query"
 
 import Button from "components/Button"
 import { Card, CardContent } from "components/Card"
+import { Drawer, DrawerTrigger } from "components/Drawer"
 import { Input } from "components/Input"
 import { ScrollArea } from "components/ScrollArea"
 import { Separator } from "components/Separator"
 import { useGetBoardGameBySearchQuery } from "services/bggApi"
 import { BaseGame } from "types"
 
-interface GameSearchProps {
-  handleAddToShelf: (bggGameId: string) => void
-}
+import GameDetails from "../GameDetail"
 
-const GameSearch: React.FC<GameSearchProps> = ({ handleAddToShelf }) => {
+const GameSearch: React.FC = () => {
   const [searchedGames, setSearchedGames] = useState<BaseGame[]>([])
   const [searchInput, setSearchInput] = useState<string>("")
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
@@ -57,15 +56,18 @@ const GameSearch: React.FC<GameSearchProps> = ({ handleAddToShelf }) => {
           <ScrollArea className='h-72 w-48 rounded-md border'>
             <div className='p-4'>
               {searchedGames?.map(game => (
-                <>
-                  <div key={`bgg-${game.bgg_game_id}`} className='text-sm'>
-                    {game.name}
-                    <Button variant='ghost' size='sm' onClick={() => handleAddToShelf(game.bgg_game_id)}>
+                <Drawer key={`bgg-${game.bgg_game_id}`}>
+                  <DrawerTrigger>
+                    <div className='text-sm hover:bg-accent cursor-pointer p-3'>
+                      {game.name}
+                      {/* <Button variant='ghost' size='sm' onClick={() => handleAddToShelf(game.bgg_game_id)}>
                       Add
-                    </Button>
-                  </div>
-                  <Separator className='my-2' />
-                </>
+                    </Button> */}
+                    </div>
+                    <Separator className='' />
+                  </DrawerTrigger>
+                  <GameDetails game={game} />
+                </Drawer>
               ))}
             </div>
           </ScrollArea>
