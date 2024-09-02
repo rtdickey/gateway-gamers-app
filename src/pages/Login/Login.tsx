@@ -14,6 +14,7 @@ const Login = ({ supabase }: LoginProps) => {
       <Auth
         supabaseClient={supabase}
         providers={["google"]}
+        redirectTo={process.env.REACT_APP_REDIRECT_URL}
         appearance={{
           theme: ThemeSupa,
           variables: {
