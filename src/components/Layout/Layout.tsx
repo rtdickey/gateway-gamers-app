@@ -15,7 +15,7 @@ const Layout = ({ session }: LoginProps) => {
   return (
     <div className='flex'>
       <Nav session={session} />
-      <div className='p-7 text-2xl flex-1 h-screen'>
+      <div className='p-7 flex-1 h-screen'>
         <Outlet />
       </div>
     </div>

@@ -27,6 +27,12 @@ const mapItemsToGameArray = (items: any[]) => {
   return games
 }
 
+export interface GameSearchRequest {
+  name: string
+  page?: number
+  pageSize?: number
+}
+
 const bggApi = createApi({
   reducerPath: "bggApi",
   baseQuery: fetchBaseQuery({ baseUrl: "https://api.geekdo.com/xmlapi2/" }),
@@ -44,11 +50,11 @@ const bggApi = createApi({
         return {
           id: "tempId",
           name: item?.name.value ?? "",
-          year_published: item?.yearpublished.value ?? null,
-          min_players: item?.minplayers.value ?? null,
-          max_players: item?.maxplayers.value ?? null,
-          playing_time: item?.playingtime.value ?? null,
-          age: item?.minage.value ?? null,
+          year_published: item?.yearpublished?.value ?? null,
+          min_players: item?.minplayers?.value ?? null,
+          max_players: item?.maxplayers?.value ?? null,
+          playing_time: item?.playingtime?.value ?? null,
+          age: item?.minage?.value ?? null,
           thumbnail: item.thumbnail ?? null,
           image: item.image ?? null,
           bgg_game_id: item.id ?? "",
@@ -56,9 +62,9 @@ const bggApi = createApi({
       },
       providesTags: ["BGG_Games"],
     }),
-    getBoardGameBySearch: builder.query<BaseGame[], string>({
-      query: gameTitle => ({
-        url: `search?query=${gameTitle}&type=boardgame`,
+    getBoardGameBySearch: builder.query<BaseGame[], GameSearchRequest>({
+      query: ({ name, page = 1, pageSize = 10 }) => ({
+        url: `search?query=${name}&page=${page}&pagesize=${pageSize}&type=boardgame`,
         responseHandler: response => response.text(),
       }),
       transformResponse: (response: any) => {
