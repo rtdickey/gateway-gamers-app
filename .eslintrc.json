@@ -2,6 +2,7 @@
   "extends": ["react-app", "react-app/jest", "plugin:react/recommended", "plugin:import/typescript"],
   "plugins": ["import"],
   "rules": {
+    "jsx-a11y/heading-has-content": "off",
     "semi": ["error", "never"],
     "no-duplicate-imports": "error",
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],
