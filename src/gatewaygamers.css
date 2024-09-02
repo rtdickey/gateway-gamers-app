@@ -670,17 +670,21 @@ body:is(.dark *) {
   z-index: 50;
 }
 
-.m-3 {
-  margin: 0.75rem;
-}
-
-.m-5 {
-  margin: 1.25rem;
-}
-
 .-mx-1 {
   margin-left: -0.25rem;
   margin-right: -0.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
+.me-2 {
+  margin-inline-end: 0.5rem;
 }
 
 .ml-2 {
@@ -699,28 +703,16 @@ body:is(.dark *) {
   margin-top: 0.5rem;
 }
 
-.mt-3 {
-  margin-top: 0.75rem;
-}
-
 .mt-4 {
   margin-top: 1rem;
-}
-
-.mt-9 {
-  margin-top: 2.25rem;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem;
 }
 
 .mt-5 {
   margin-top: 1.25rem;
 }
 
-.mb-5 {
-  margin-bottom: 1.25rem;
+.mt-9 {
+  margin-top: 2.25rem;
 }
 
 .flex {
@@ -797,10 +789,6 @@ body:is(.dark *) {
 
 .w-full {
   width: 100%;
-}
-
-.w-40 {
-  width: 10rem;
 }
 
 .max-w-lg {
@@ -907,16 +895,16 @@ body:is(.dark *) {
   border-radius: 9999px;
 }
 
+.rounded-lg {
+  border-radius: var(--radius);
+}
+
 .rounded-md {
   border-radius: calc(var(--radius) - 2px);
 }
 
 .rounded-sm {
   border-radius: calc(var(--radius) - 4px);
-}
-
-.rounded-lg {
-  border-radius: var(--radius);
 }
 
 .border {
@@ -955,6 +943,10 @@ body:is(.dark *) {
   background-color: hsl(var(--border));
 }
 
+.bg-card {
+  background-color: hsl(var(--card));
+}
+
 .bg-destructive {
   background-color: hsl(var(--destructive));
 }
@@ -973,10 +965,6 @@ body:is(.dark *) {
 
 .bg-transparent {
   background-color: transparent;
-}
-
-.bg-card {
-  background-color: hsl(var(--card));
 }
 
 .p-0 {
@@ -1047,16 +1035,16 @@ body:is(.dark *) {
   padding-bottom: 1.5rem;
 }
 
+.pt-0 {
+  padding-top: 0px;
+}
+
 .pt-6 {
   padding-top: 1.5rem;
 }
 
 .pt-8 {
   padding-top: 2rem;
-}
-
-.pt-0 {
-  padding-top: 0px;
 }
 
 .text-center {
@@ -1108,6 +1096,10 @@ body:is(.dark *) {
   letter-spacing: 0.1em;
 }
 
+.text-card-foreground {
+  color: hsl(var(--card-foreground));
+}
+
 .text-destructive-foreground {
   color: hsl(var(--destructive-foreground));
 }
@@ -1143,10 +1135,6 @@ body:is(.dark *) {
 
 .text-secondary-foreground {
   color: hsl(var(--secondary-foreground));
-}
-
-.text-card-foreground {
-  color: hsl(var(--card-foreground));
 }
 
 .underline-offset-4 {
