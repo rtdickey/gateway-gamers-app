@@ -64,7 +64,7 @@ const GameSearch: React.FC = () => {
                       Add
                     </Button> */}
                     </div>
-                    <Separator className='' />
+                    <Separator />
                   </DrawerTrigger>
                   <GameDetails game={game} />
                 </Drawer>
