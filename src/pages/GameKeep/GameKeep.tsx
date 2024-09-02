@@ -5,6 +5,7 @@ import { Session } from "@supabase/supabase-js"
 import Combobox, { ComboboxOptions } from "components/Combobox"
 import Shelf from "components/GameKeep/Shelf"
 import useShelves from "hooks/useShelves"
+import { useGetBoardGameQuery } from "services/bggApi"
 
 interface GameKeepProps {
   session: Session | null
@@ -12,7 +13,14 @@ interface GameKeepProps {
 
 const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
   const { shelves } = useShelves()
+  const { data: boardgame } = useGetBoardGameQuery("35420")
   const [selectedShelf, setSelectedShelf] = React.useState<string>(shelves.data?.[0].id.toString() ?? "")
+
+  const game = useMemo(() => {
+    const result = JSON.stringify(boardgame, null, 2)
+    console.log(result)
+    return result
+  }, [boardgame])
 
   const shelfOptions = useMemo(() => {
     if (!!shelves.data) {
@@ -47,6 +55,9 @@ const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
             />
           </div>
           <Shelf shelfId={selectedShelf} />
+          <div className='mt-5'>
+            <pre>{boardgame?.name}</pre>
+          </div>
         </>
       )}
     </>
