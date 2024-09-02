@@ -1,12 +1,29 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { combineReducers, configureStore } from "@reduxjs/toolkit"
+import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE } from "redux-persist" // Add this import
+import storage from "redux-persist/lib/storage"
 
-import { shelvesApi } from "services"
+import { bggApi, shelvesApi } from "services"
+
+const rootReducer = combineReducers({
+  [bggApi.reducerPath]: bggApi.reducer,
+  [shelvesApi.reducerPath]: shelvesApi.reducer,
+})
+
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage: storage,
+}
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 const store = configureStore({
-  reducer: {
-    [shelvesApi.reducerPath]: shelvesApi.reducer,
-  },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(shelvesApi.middleware),
+  reducer: persistedReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(bggApi.middleware, shelvesApi.middleware),
 })
 
 export type RootStore = ReturnType<typeof store.getState>

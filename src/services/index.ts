@@ -1,3 +1,4 @@
+import { bggApi } from "./bggApi"
 import { shelvesApi } from "./shelvesApi"
 
-export { shelvesApi }
+export { bggApi, shelvesApi }
