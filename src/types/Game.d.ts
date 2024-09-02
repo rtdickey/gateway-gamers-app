@@ -1,6 +1,7 @@
 export interface BaseGame {
   name: string
   year_published: number | null
+  bgg_game_id: string
 }
 
 export interface Game extends BaseGame {
