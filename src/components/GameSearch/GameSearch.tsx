@@ -10,7 +10,11 @@ import { Separator } from "components/Separator"
 import { useGetBoardGameBySearchQuery } from "services/bggApi"
 import { BaseGame } from "types"
 
-const GameSearch = () => {
+interface GameSearchProps {
+  handleAddToShelf: (bggGameId: string) => void
+}
+
+const GameSearch: React.FC<GameSearchProps> = ({ handleAddToShelf }) => {
   const [searchedGames, setSearchedGames] = useState<BaseGame[]>([])
   const [searchInput, setSearchInput] = useState<string>("")
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
@@ -35,10 +39,6 @@ const GameSearch = () => {
     setSearchInput(e.target.value)
   }
 
-  const handleAddToShelf = () => {
-    alert("add to shelf")
-  }
-
   return (
     <Card>
       <CardContent className='pt-5'>
@@ -60,7 +60,7 @@ const GameSearch = () => {
                 <>
                   <div key={`bgg-${game.bgg_game_id}`} className='text-sm'>
                     {game.name}
-                    <Button variant='ghost' size='sm' onClick={handleAddToShelf}>
+                    <Button variant='ghost' size='sm' onClick={() => handleAddToShelf(game.bgg_game_id)}>
                       Add
                     </Button>
                   </div>

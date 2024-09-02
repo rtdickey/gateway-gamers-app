@@ -33,6 +33,10 @@ const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
     setSelectedShelf(value)
   }
 
+  const handleAddToShelf = (bggGameId: string) => {
+    alert(`add to shelf '${selectedShelf}', the game id is '${bggGameId}' for user '${session?.user?.id}'`)
+  }
+
   return (
     <>
       {shelves.data && !shelves.error && (
@@ -52,7 +56,7 @@ const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
             <Shelf shelfId={selectedShelf} />
           </div>
           <div>
-            <GameSearch />
+            <GameSearch handleAddToShelf={handleAddToShelf} />
           </div>
         </div>
       )}
