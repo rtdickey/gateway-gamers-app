@@ -18,8 +18,7 @@ const Nav = () => {
 
   return (
     <>
-      <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-accent relative`}></div>
-      <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-accent fixed`}>
+      <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-accent relative`}>
         <img
           src={menuToggle}
           alt='menu toggle'

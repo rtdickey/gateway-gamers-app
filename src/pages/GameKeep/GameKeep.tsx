@@ -1,8 +1,9 @@
 import React, { useMemo } from "react"
 
-import Combobox, { ComboboxOptions } from "components/Combobox"
+import { ComboboxOptions } from "components/Combobox"
 import GameSearch from "components/GameKeep/GameSearch"
 import Shelf from "components/GameKeep/Shelf"
+import ShelfSelect from "components/GameKeep/ShelfSelect"
 import useShelves from "hooks/useShelves"
 
 const GameKeep: React.FC = () => {
@@ -36,12 +37,7 @@ const GameKeep: React.FC = () => {
             <hr className='mt-2 mb-2' />
             <div className='flex mt-5 mb-5 text-sm items-center gap-x-4 font-semibold'>
               <label>Shelf: </label>
-              <Combobox
-                options={shelfOptions}
-                label='Select a shelf'
-                handleSelectCallback={handleSelectCallback}
-                selectedOption={selectedShelf}
-              />
+              <ShelfSelect onSelect={handleSelectCallback} />
             </div>
             <Shelf shelfId={selectedShelf} />
           </div>
