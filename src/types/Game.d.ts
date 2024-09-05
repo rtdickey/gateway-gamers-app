@@ -13,3 +13,9 @@ export interface Game extends BaseGame {
   thumbnail: string | null
   image: string | null
 }
+
+export interface UserGame {
+  id: string
+  bgg_game_id: number
+  shelf_id: number
+}
