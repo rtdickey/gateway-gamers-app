@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import { Outlet, useNavigate } from "react-router-dom"
 
@@ -9,9 +9,12 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ isAuthenticated, children }) => {
   const navigate = useNavigate()
-  if (!isAuthenticated) {
-    navigate("/")
-  }
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/Login")
+    }
+  }, [isAuthenticated, navigate])
 
   return <>{children}</>
 }

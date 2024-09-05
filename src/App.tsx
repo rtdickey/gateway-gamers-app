@@ -8,6 +8,7 @@ import useSession from "hooks/Supabase/useSession"
 import GameKeep from "pages/GameKeep"
 import Home from "pages/Home"
 import Login from "pages/Login"
+import NotFound from "pages/NotFound"
 import Profile from "pages/Profile"
 
 import "./App.css"
@@ -37,6 +38,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
     </div>
