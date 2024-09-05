@@ -1,15 +1,10 @@
 import React from "react"
 
-import { Session } from "@supabase/supabase-js"
-
 import Button from "components/Button"
+import useSession from "hooks/Supabase/useSession"
 
-interface ProfileProps {
-  session: Session | null
-  handleSignOut: () => void
-}
-
-const Profile: React.FC<ProfileProps> = ({ session, handleSignOut }) => {
+const Profile: React.FC = () => {
+  const { session, handleSignOut } = useSession()
   const user = session?.user
 
   return (

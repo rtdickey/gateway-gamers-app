@@ -1,17 +1,11 @@
 import React, { useMemo } from "react"
 
-import { Session } from "@supabase/supabase-js"
-
 import Combobox, { ComboboxOptions } from "components/Combobox"
 import GameSearch from "components/GameKeep/GameSearch"
 import Shelf from "components/GameKeep/Shelf"
 import useShelves from "hooks/useShelves"
 
-interface GameKeepProps {
-  session: Session | null
-}
-
-const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
+const GameKeep: React.FC = () => {
   const { data: shelves, error: shelvesError } = useShelves()
 
   const [selectedShelf, setSelectedShelf] = React.useState<string>(shelves?.[0].id.toString() ?? "")

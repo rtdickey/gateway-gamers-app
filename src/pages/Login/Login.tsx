@@ -2,13 +2,10 @@ import React from "react"
 
 import { Auth } from "@supabase/auth-ui-react"
 import { ThemeSupa } from "@supabase/auth-ui-shared"
-import { SupabaseClient } from "@supabase/supabase-js"
 
-interface LoginProps {
-  supabase: SupabaseClient
-}
+import { supabase } from "Supabase"
 
-const Login = ({ supabase }: LoginProps) => {
+const Login: React.FC = () => {
   return (
     <div style={{ width: "300px", margin: "0 auto", marginTop: "4em" }}>
       <Auth
