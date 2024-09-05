@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo, useState } from "react"
 
 import Button from "components/Button"
 import {
@@ -9,6 +9,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "components/Drawer"
+import useSession from "hooks/Supabase/useSession"
 import { useGetBoardGameByIdQuery } from "services/bggApi"
 import { BaseGame } from "types"
 
@@ -19,12 +20,24 @@ interface GameDetailsProps {
 }
 
 const GameDetails: React.FC<GameDetailsProps> = ({ game }) => {
-  // const [selectedShelf, setSelectedShelf] = useState<number | null>(null)
+  const { session, isAuthenticated } = useSession()
+  const [selectedShelf, setSelectedShelf] = useState<string | null>(null)
+
   const { data: gameDetails } = useGetBoardGameByIdQuery(game.bgg_game_id)
 
-  //   const handleAddToShelf = (bggGameId: string) => {
-  //     alert(`add to shelf '${selectedShelf}', the game id is '${bggGameId}' for user '${session?.user?.id}'`)
-  //   }
+  const canAddGameToShelf = useMemo(() => {
+    return isAuthenticated && !!selectedShelf
+  }, [isAuthenticated, selectedShelf])
+
+  const handleOnShelfSelect = (shelfId: string) => {
+    setSelectedShelf(shelfId)
+  }
+
+  const handleAddToShelf = (bggGameId: number | undefined) => {
+    if (!!bggGameId && canAddGameToShelf) {
+      alert(`add to shelf '${selectedShelf}', the game id is '${bggGameId}' for user '${session?.user?.id}'`)
+    }
+  }
 
   return (
     <DrawerContent>
@@ -66,11 +79,13 @@ const GameDetails: React.FC<GameDetailsProps> = ({ game }) => {
             </ul>
           </div>
           <div className='flex justify-center mt-5 mb-3'>
-            <ShelfSelect />
+            <ShelfSelect onSelect={handleOnShelfSelect} />
           </div>
         </div>
         <DrawerFooter className='grid grid-cols-2 gap-4 justify-between'>
-          <Button>Add to shelf</Button>
+          <Button onClick={() => handleAddToShelf(gameDetails?.bgg_game_id)} disabled={!canAddGameToShelf}>
+            Add to shelf
+          </Button>
           <DrawerClose asChild>
             <Button variant='outline'>Cancel</Button>
           </DrawerClose>
