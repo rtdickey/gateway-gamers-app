@@ -11,6 +11,7 @@ const useSession = () => {
 
   const handleSignOut = () => {
     supabase.auth.signOut()
+    navigate("/Login")
   }
 
   useEffect(() => {
