@@ -11,10 +11,14 @@ import {
 } from "components/Select"
 import useShelves from "hooks/useShelves"
 
-const ShelfSelect: React.FC = () => {
+interface ShelfSelectProps {
+  onSelect?: (shelfId: string) => void
+}
+
+const ShelfSelect: React.FC<ShelfSelectProps> = ({ onSelect }) => {
   const { data: shelves } = useShelves()
   return (
-    <Select>
+    <Select onValueChange={onSelect}>
       <SelectTrigger className='w-[180px]'>
         <SelectValue placeholder='Select a shelf' />
       </SelectTrigger>

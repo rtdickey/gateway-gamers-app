@@ -2,32 +2,23 @@ import React from "react"
 
 import { faDice, faHome, faUser } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Session } from "@supabase/supabase-js"
 
 import menuToggle from "assets/control.png"
 import logo from "assets/gateway-gamers-logo.png"
 import NavItem from "components/NavItem"
+import useSession from "hooks/Supabase/useSession"
 
-interface NavProps {
-  session: Session | null
-}
-
-const Nav = ({ session }: NavProps) => {
+const Nav = () => {
+  const { isAuthenticated } = useSession()
   const [open, setOpen] = React.useState(true)
-  const [activeMenuItem, setActiveMenuItem] = React.useState("home")
 
   const handleMenuToggleOnClick = () => {
     setOpen(!open)
   }
 
-  const handleMenuClick = (menuId: string) => {
-    setActiveMenuItem(menuId)
-  }
-
   return (
     <>
-      <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-accent relative`}></div>
-      <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-accent fixed`}>
+      <div className={`${open ? "w-72" : "w-20"} duration-300 h-screen p-5 pt-8 bg-accent relative`}>
         <img
           src={menuToggle}
           alt='menu toggle'
@@ -44,27 +35,32 @@ const Nav = ({ session }: NavProps) => {
             title='Home'
             path='/'
             icon={<FontAwesomeIcon icon={faHome} className='text-xl  fa-fw' />}
-            activeMenuItem={activeMenuItem}
-            handleMenuClick={handleMenuClick}
             showTitle={open}
           />
-          <NavItem
-            menuId='game-keep'
-            title='Game Keep'
-            path='/GameKeep'
-            icon={<FontAwesomeIcon icon={faDice} className='text-xl  fa-fw' />}
-            activeMenuItem={activeMenuItem}
-            handleMenuClick={handleMenuClick}
-            showTitle={open}
-          />
-          {session && (
+          {isAuthenticated && (
+            <>
+              <NavItem
+                menuId='game-keep'
+                title='Game Keep'
+                path='/GameKeep'
+                icon={<FontAwesomeIcon icon={faDice} className='text-xl  fa-fw' />}
+                showTitle={open}
+              />
+              <NavItem
+                menuId='profile'
+                title='Profile'
+                path='/Profile'
+                icon={<FontAwesomeIcon icon={faUser} className='text-xl fa-fw' />}
+                showTitle={open}
+              />
+            </>
+          )}
+          {!isAuthenticated && (
             <NavItem
-              menuId='profile'
-              title='Profile'
-              path='/Profile'
+              menuId='login'
+              title='Login'
+              path='/Login'
               icon={<FontAwesomeIcon icon={faUser} className='text-xl fa-fw' />}
-              activeMenuItem={activeMenuItem}
-              handleMenuClick={handleMenuClick}
               showTitle={open}
             />
           )}

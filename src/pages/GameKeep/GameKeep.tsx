@@ -1,33 +1,14 @@
-import React, { useMemo } from "react"
+import React from "react"
 
-import { Session } from "@supabase/supabase-js"
-
-import Combobox, { ComboboxOptions } from "components/Combobox"
 import GameSearch from "components/GameKeep/GameSearch"
 import Shelf from "components/GameKeep/Shelf"
+import ShelfSelect from "components/GameKeep/ShelfSelect"
 import useShelves from "hooks/useShelves"
 
-interface GameKeepProps {
-  session: Session | null
-}
-
-const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
+const GameKeep: React.FC = () => {
   const { data: shelves, error: shelvesError } = useShelves()
 
   const [selectedShelf, setSelectedShelf] = React.useState<string>(shelves?.[0].id.toString() ?? "")
-
-  const shelfOptions = useMemo(() => {
-    if (!!shelves) {
-      return shelves.map(shelf => {
-        return {
-          value: shelf.id.toString(),
-          label: shelf.name,
-        } as ComboboxOptions
-      })
-    }
-
-    return []
-  }, [shelves])
 
   const handleSelectCallback = (value: string) => {
     setSelectedShelf(value)
@@ -42,12 +23,7 @@ const GameKeep: React.FC<GameKeepProps> = ({ session }) => {
             <hr className='mt-2 mb-2' />
             <div className='flex mt-5 mb-5 text-sm items-center gap-x-4 font-semibold'>
               <label>Shelf: </label>
-              <Combobox
-                options={shelfOptions}
-                label='Select a shelf'
-                handleSelectCallback={handleSelectCallback}
-                selectedOption={selectedShelf}
-              />
+              <ShelfSelect onSelect={handleSelectCallback} />
             </div>
             <Shelf shelfId={selectedShelf} />
           </div>

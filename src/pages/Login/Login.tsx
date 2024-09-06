@@ -2,13 +2,19 @@ import React from "react"
 
 import { Auth } from "@supabase/auth-ui-react"
 import { ThemeSupa } from "@supabase/auth-ui-shared"
-import { SupabaseClient } from "@supabase/supabase-js"
+import { useNavigate } from "react-router-dom"
 
-interface LoginProps {
-  supabase: SupabaseClient
-}
+import useSession from "hooks/Supabase/useSession"
+import { supabase } from "Supabase"
 
-const Login = ({ supabase }: LoginProps) => {
+const Login: React.FC = () => {
+  const { isAuthenticated } = useSession()
+  const navigate = useNavigate()
+
+  if (isAuthenticated) {
+    navigate("/GameKeep")
+  }
+
   return (
     <div style={{ width: "300px", margin: "0 auto", marginTop: "4em" }}>
       <Auth
