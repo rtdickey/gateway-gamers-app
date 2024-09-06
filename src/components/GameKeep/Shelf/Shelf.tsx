@@ -10,7 +10,7 @@ interface ShelfProps {
 }
 
 const Shelf: React.FC<ShelfProps> = ({ shelfId, className = "" }) => {
-  const { data: games, error: gamesError } = useGetUserGamesQuery(shelfId.length ? shelfId : skipToken)
+  const { data: games } = useGetUserGamesQuery(shelfId.length ? shelfId : skipToken)
 
   return (
     <div className={className}>
