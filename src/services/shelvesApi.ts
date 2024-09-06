@@ -40,6 +40,20 @@ const shelvesApi = createApi({
       },
       providesTags: ["Shelf"],
     }),
+    getUserGames: builder.query<UserGame[], string>({
+      queryFn: async shelfId => {
+        const { data, error } = await supabase
+          .from("UserGames")
+          .select("id, bgg_game_id, shelf_id")
+          .eq("shelf_id", shelfId)
+
+        if (error) {
+          return { error }
+        }
+
+        return { data }
+      },
+    }),
     addGameToShelf: builder.mutation<UserGame[], AddGameToShelfRequest>({
       queryFn: async ({ shelfId, bggGameId, userId }) => {
         const { data, error } = await supabase
@@ -96,5 +110,6 @@ const shelvesApi = createApi({
   }),
 })
 
-export const { useGetShelvesQuery, useAddGameToShelfMutation, useAddGameDetailsMutation } = shelvesApi
+export const { useGetShelvesQuery, useAddGameToShelfMutation, useAddGameDetailsMutation, useGetUserGamesQuery } =
+  shelvesApi
 export { shelvesApi }

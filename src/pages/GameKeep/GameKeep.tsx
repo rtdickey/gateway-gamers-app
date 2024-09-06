@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo } from "react"
 
 import { ComboboxOptions } from "components/Combobox"
 import GameSearch from "components/GameKeep/GameSearch"
