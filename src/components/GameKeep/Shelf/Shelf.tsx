@@ -2,7 +2,7 @@ import React from "react"
 
 import { skipToken } from "@reduxjs/toolkit/query"
 
-import { useGetUserGamesQuery } from "services/shelvesApi"
+import { useGetUserGamesQuery } from "services/userGamesApi"
 
 interface ShelfProps {
   shelfId: string
@@ -17,7 +17,7 @@ const Shelf: React.FC<ShelfProps> = ({ shelfId, className = "" }) => {
       {shelfId && games ? (
         <ul>
           {games.map((item, index) => {
-            return <li key={index}>{item.bgg_game_id}</li>
+            return <li key={index}>{item.game_id}</li>
           })}
         </ul>
       ) : (

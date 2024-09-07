@@ -4,18 +4,20 @@ import { skipToken } from "@reduxjs/toolkit/query"
 
 import Button from "components/Button"
 import { Card, CardContent } from "components/Card"
-import { Drawer, DrawerTrigger } from "components/Drawer"
+import { Drawer } from "components/Drawer"
 import { Input } from "components/Input"
 import { ScrollArea } from "components/ScrollArea"
 import { Separator } from "components/Separator"
 import { useGetBoardGameBySearchQuery } from "services/bggApi"
-import { AddGameDetailsRequest, useAddGameDetailsMutation } from "services/shelvesApi"
+import { useAddGameMutation } from "services/shelvesApi"
+import { useGetAllUserGamesQuery } from "services/userGamesApi"
 import { BaseGame, Game } from "types"
 
 import GameDetails from "../GameDetail"
 
 const GameSearch: React.FC = () => {
-  const [addGameDetails] = useAddGameDetailsMutation()
+  const { data: userGames } = useGetAllUserGamesQuery()
+  const [addGame] = useAddGameMutation()
   const [searchedGames, setSearchedGames] = useState<BaseGame[]>([])
   const [searchInput, setSearchInput] = useState<string>("")
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
@@ -36,6 +38,7 @@ const GameSearch: React.FC = () => {
   }
 
   useEffect(() => {
+    // setSearchedGames(games?.filter(g => userGames?.every(ug => ug.bgg_game_id !== g.bgg_game_id)) ?? [])
     setSearchedGames(games ?? [])
   }, [games])
 
@@ -47,7 +50,7 @@ const GameSearch: React.FC = () => {
     setSelectedGame(game)
     setDrawerOpen(!drawerOpen)
 
-    // addGameDetails({
+    // addGame({
     //   name: game?.name,
     //   year_published: game?.year_published,
     //   // min_players: game?.min_players,
@@ -57,7 +60,7 @@ const GameSearch: React.FC = () => {
     //   // thumbnail: game?.thumbnail,
     //   // image: game?.image,
     //   bgg_game_id: game?.bgg_game_id,
-    // } as AddGameDetailsRequest)
+    // } as AddGameRequest)
   }
 
   const handleDrawerClose = () => {
@@ -83,12 +86,12 @@ const GameSearch: React.FC = () => {
             <ScrollArea className='h-72 w-48 rounded-md border'>
               <div className='p-4'>
                 {searchedGames?.map(game => (
-                  <>
+                  <div key={game.bgg_game_id}>
                     <div className='text-sm hover:bg-accent cursor-pointer p-3' onClick={() => handleDrawerOpen(game)}>
                       {game.name}
                     </div>
                     <Separator />
-                  </>
+                  </div>
                 ))}
               </div>
             </ScrollArea>

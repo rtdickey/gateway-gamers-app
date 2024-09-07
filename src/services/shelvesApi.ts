@@ -1,17 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react"
 
 import { supabase } from "Supabase"
-import { Shelf, Game, UserGame } from "types"
+import { Shelf, Game } from "types"
 
 import { supabaseBaseQuery } from "./supabaseBaseQuery"
 
-interface AddGameToShelfRequest {
-  shelfId: number
-  bggGameId: number
-  userId: string
-}
-
-export interface AddGameDetailsRequest {
+export interface AddGameRequest {
   name: string
   year_published: number | null
   min_players: number | null
@@ -40,36 +34,7 @@ const shelvesApi = createApi({
       },
       providesTags: ["Shelf"],
     }),
-    getUserGames: builder.query<UserGame[], string>({
-      queryFn: async shelfId => {
-        const { data, error } = await supabase
-          .from("UserGames")
-          .select("id, bgg_game_id, shelf_id")
-          .eq("shelf_id", shelfId)
-
-        if (error) {
-          return { error }
-        }
-
-        return { data }
-      },
-    }),
-    addGameToShelf: builder.mutation<UserGame[], AddGameToShelfRequest>({
-      queryFn: async ({ shelfId, bggGameId, userId }) => {
-        const { data, error } = await supabase
-          .from("UserGames")
-          .insert({ shelf_id: shelfId, bgg_game_id: bggGameId, user_id: userId })
-          .select("id, bgg_game_id, shelf_id")
-
-        if (error) {
-          return { error }
-        }
-
-        return { data }
-      },
-      invalidatesTags: ["Shelf"],
-    }),
-    addGameDetails: builder.mutation<Game[], AddGameDetailsRequest>({
+    addGame: builder.mutation<Game[], AddGameRequest>({
       queryFn: async ({
         name,
         year_published,
@@ -81,19 +46,6 @@ const shelvesApi = createApi({
         image,
         bgg_game_id,
       }) => {
-        // const { data: record, error: selectError } = await supabase
-        //   .from("Games")
-        //   .select("*")
-        //   .eq("bgg_game_id", bgg_game_id)
-
-        // if (selectError) {
-        //   return { error: selectError }
-        // }
-
-        // if (record.length > 0) {
-        //   return { data: record }
-        // }
-
         const { data, error } = await supabase
           .from("Games")
           .upsert({ name, year_published, min_players, max_players, playing_time, age, thumbnail, image, bgg_game_id })
@@ -110,6 +62,5 @@ const shelvesApi = createApi({
   }),
 })
 
-export const { useGetShelvesQuery, useAddGameToShelfMutation, useAddGameDetailsMutation, useGetUserGamesQuery } =
-  shelvesApi
+export const { useGetShelvesQuery, useAddGameMutation } = shelvesApi
 export { shelvesApi }
