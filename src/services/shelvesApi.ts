@@ -81,22 +81,22 @@ const shelvesApi = createApi({
         image,
         bgg_game_id,
       }) => {
-        const { data: record, error: selectError } = await supabase
-          .from("Games")
-          .select("*")
-          .eq("bgg_game_id", bgg_game_id)
+        // const { data: record, error: selectError } = await supabase
+        //   .from("Games")
+        //   .select("*")
+        //   .eq("bgg_game_id", bgg_game_id)
 
-        if (selectError) {
-          return { error: selectError }
-        }
+        // if (selectError) {
+        //   return { error: selectError }
+        // }
 
-        if (record.length > 0) {
-          return { data: record }
-        }
+        // if (record.length > 0) {
+        //   return { data: record }
+        // }
 
         const { data, error } = await supabase
           .from("Games")
-          .insert({ name, year_published, min_players, max_players, playing_time, age, thumbnail, image, bgg_game_id })
+          .upsert({ name, year_published, min_players, max_players, playing_time, age, thumbnail, image, bgg_game_id })
           .select()
 
         if (error) {
