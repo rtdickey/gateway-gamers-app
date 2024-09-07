@@ -1,20 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useMemo, useState } from "react"
 
 import { skipToken } from "@reduxjs/toolkit/query"
 
 import Button from "components/Button"
-import {
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "components/Drawer"
+import { DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "components/Drawer"
 import useSession from "hooks/Supabase/useSession"
 import { useGetBoardGameByIdQuery } from "services/bggApi"
-import { AddGameRequest, useAddGameMutation } from "services/shelvesApi"
-import { useAddUserGameMutation } from "services/userGamesApi"
+// import { useAddGameMutation } from "services/shelvesApi"
+// import { useAddUserGameMutation } from "services/userGamesApi"
 import { BaseGame } from "types"
 
 import ShelfSelect from "../ShelfSelect"
@@ -27,8 +20,8 @@ interface GameDetailsProps {
 const GameDetails: React.FC<GameDetailsProps> = ({ game, handleOnClickCancel }) => {
   const { session, isAuthenticated } = useSession()
   const [selectedShelf, setSelectedShelf] = useState<string | null>(null)
-  const [addUserGame] = useAddUserGameMutation()
-  const [addGame] = useAddGameMutation()
+  // const [addUserGame] = useAddUserGameMutation()
+  // const [addGame] = useAddGameMutation()
 
   const { data: gameDetails } = useGetBoardGameByIdQuery(game?.bgg_game_id ?? skipToken)
 
