@@ -43,7 +43,7 @@ const GameDetails: React.FC<GameDetailsProps> = ({ game, handleOnClickCancel }) 
   const handleAddToShelf = (bggGameId: number | undefined) => {
     if (!!bggGameId && canAddGameToShelf && session?.user?.id) {
       console.log("adding game to shelf")
-      //addUserGame({ shelfId: parseInt(selectedShelf!), game_id: "test", userId: session.user.id })
+      //addUserGame({ shelfId: parseInt(selectedShelf!), gameId: "test", userId: session.user.id })
     }
   }
 
