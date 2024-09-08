@@ -8,21 +8,24 @@ import { Drawer } from "components/Drawer"
 import { Input } from "components/Input"
 import { ScrollArea } from "components/ScrollArea"
 import { Separator } from "components/Separator"
-import { useGetBoardGameBySearchQuery } from "services/bggApi"
-import { useAddGameMutation } from "services/shelvesApi"
-// import { useGetAllUserGamesQuery } from "services/userGamesApi"
+import { useGetBoardGameByIdQuery, useGetBoardGameBySearchQuery } from "services/bggApi"
+import { AddGameRequest, useAddGameMutation, useGetGamesByBggGameIdQuery } from "services/gamesApi"
+import { useAddUserGameMutation } from "services/userGamesApi"
 import { BaseGame } from "types"
 
 import GameDetails from "../GameDetail"
 
 const GameSearch: React.FC = () => {
-  // const { data: userGames } = useGetAllUserGamesQuery()
   const [addGame] = useAddGameMutation()
+  const [addGameToShelf] = useAddUserGameMutation()
   const [searchedGames, setSearchedGames] = useState<BaseGame[]>([])
   const [searchInput, setSearchInput] = useState<string>("")
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
-  const [selectedGame, setSelectedGame] = useState<BaseGame | null>(null)
+  const [selectedBggGameId, setSelectedBggGameId] = useState<number | null>(null)
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
+
+  const { data: bggGameDetails } = useGetBoardGameByIdQuery(selectedBggGameId ?? skipToken)
+  const { data: gameDetails } = useGetGamesByBggGameIdQuery(selectedBggGameId ?? skipToken)
 
   const { data: games } = useGetBoardGameBySearchQuery(
     searchQuery ? { name: searchQuery, page: 1, pageSize: 10 } : skipToken,
@@ -46,27 +49,40 @@ const GameSearch: React.FC = () => {
     setSearchInput(e.target.value)
   }
 
-  const handleDrawerOpen = (game: BaseGame) => {
-    setSelectedGame(game)
+  const handleGameSelect = (game: BaseGame) => {
+    setSelectedBggGameId(game.bgg_game_id)
+  }
 
+  const handleDrawerOpen = () => {
     setDrawerOpen(!drawerOpen)
-
-    // addGame({
-    //   name: game?.name,
-    //   year_published: game?.year_published,
-    //   // min_players: game?.min_players,
-    //   // max_players: game?.max_players,
-    //   // playing_time: game?.playing_time,
-    //   // age: game?.age,
-    //   // thumbnail: game?.thumbnail,
-    //   // image: game?.image,
-    //   bgg_game_id: game?.bgg_game_id,
-    // } as AddGameRequest)
   }
 
   const handleDrawerClose = () => {
+    setSelectedBggGameId(null)
     setDrawerOpen(!drawerOpen)
   }
+
+  useEffect(() => {
+    if (!!gameDetails && gameDetails.length === 0 && !!bggGameDetails) {
+      setSelectedBggGameId(null)
+      addGame({
+        name: bggGameDetails.name ?? "",
+        year_published: bggGameDetails.year_published ?? null,
+        min_players: bggGameDetails.min_players ?? null,
+        max_players: bggGameDetails.max_players ?? null,
+        playing_time: bggGameDetails.playing_time ?? null,
+        age: bggGameDetails.age ?? null,
+        thumbnail: bggGameDetails.thumbnail ?? "",
+        image: bggGameDetails.image ?? "",
+        bgg_game_id: bggGameDetails.bgg_game_id ?? 0,
+      } as AddGameRequest)
+      setSelectedBggGameId(bggGameDetails.bgg_game_id)
+    }
+
+    if (!!gameDetails?.[0]) {
+      handleDrawerOpen()
+    }
+  }, [gameDetails])
 
   return (
     <>
@@ -88,7 +104,7 @@ const GameSearch: React.FC = () => {
               <div className='p-4'>
                 {searchedGames?.map(game => (
                   <div key={game.bgg_game_id}>
-                    <div className='text-sm hover:bg-accent cursor-pointer p-3' onClick={() => handleDrawerOpen(game)}>
+                    <div className='text-sm hover:bg-accent cursor-pointer p-3' onClick={() => handleGameSelect(game)}>
                       {game.name}
                     </div>
                     <Separator />
@@ -100,7 +116,7 @@ const GameSearch: React.FC = () => {
         </CardContent>
       </Card>
       <Drawer open={drawerOpen} onClose={handleDrawerClose}>
-        <GameDetails game={selectedGame} handleOnClickCancel={handleDrawerClose} />
+        <GameDetails game={gameDetails?.length ? gameDetails[0] : null} handleOnClickCancel={handleDrawerClose} />
       </Drawer>
     </>
   )

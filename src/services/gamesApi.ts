@@ -53,7 +53,7 @@ const gamesApi = createApi({
       }) => {
         const { data, error } = await supabase
           .from("Games")
-          .upsert({ name, year_published, min_players, max_players, playing_time, age, thumbnail, image, bgg_game_id })
+          .insert({ name, year_published, min_players, max_players, playing_time, age, thumbnail, image, bgg_game_id })
           .select()
 
         if (error) {
