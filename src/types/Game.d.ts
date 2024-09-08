@@ -17,5 +17,5 @@ export interface Game extends BaseGame {
 export interface UserGame {
   id: string
   game_id: string
-  shelf_id: number
+  Games: Game[]
 }

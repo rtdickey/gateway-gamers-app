@@ -758,6 +758,10 @@ body:is(.dark *) {
   margin-top: auto;
 }
 
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .flex {
   display: flex;
 }
@@ -1244,6 +1248,14 @@ body:is(.dark *) {
 
 .pt-8 {
   padding-top: 2rem;
+}
+
+.pe-4 {
+  padding-inline-end: 1rem;
+}
+
+.ps-4 {
+  padding-inline-start: 1rem;
 }
 
 .text-center {
