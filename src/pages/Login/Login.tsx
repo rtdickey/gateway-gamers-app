@@ -4,6 +4,7 @@ import { Auth } from "@supabase/auth-ui-react"
 import { ThemeSupa } from "@supabase/auth-ui-shared"
 import { useNavigate } from "react-router-dom"
 
+import Button from "components/Button"
 import useSession from "hooks/Supabase/useSession"
 import { supabase } from "Supabase"
 
@@ -15,8 +16,20 @@ const Login: React.FC = () => {
     navigate("/GameKeep")
   }
 
+  const handleOtpAuth = async () => {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email: "ryantay87@gmail.com",
+      options: {
+        // set this to false if you do not want the user to be automatically signed up
+        shouldCreateUser: true,
+        emailRedirectTo: "https://gatewaygamers.com/GameKeep",
+      },
+    })
+  }
+
   return (
     <div style={{ width: "300px", margin: "0 auto", marginTop: "4em" }}>
+      <Button onClick={handleOtpAuth}>Login with OTP</Button>
       <Auth
         supabaseClient={supabase}
         providers={["google"]}
