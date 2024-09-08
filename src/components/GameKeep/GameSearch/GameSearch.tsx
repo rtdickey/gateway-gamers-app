@@ -9,7 +9,7 @@ import { Input } from "components/Input"
 import { ScrollArea } from "components/ScrollArea"
 import { Separator } from "components/Separator"
 import { useGetBoardGameBySearchQuery } from "services/bggApi"
-// import { useAddGameMutation } from "services/shelvesApi"
+import { useAddGameMutation } from "services/shelvesApi"
 // import { useGetAllUserGamesQuery } from "services/userGamesApi"
 import { BaseGame } from "types"
 
@@ -17,7 +17,7 @@ import GameDetails from "../GameDetail"
 
 const GameSearch: React.FC = () => {
   // const { data: userGames } = useGetAllUserGamesQuery()
-  // const [addGame] = useAddGameMutation()
+  const [addGame] = useAddGameMutation()
   const [searchedGames, setSearchedGames] = useState<BaseGame[]>([])
   const [searchInput, setSearchInput] = useState<string>("")
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
@@ -48,6 +48,7 @@ const GameSearch: React.FC = () => {
 
   const handleDrawerOpen = (game: BaseGame) => {
     setSelectedGame(game)
+
     setDrawerOpen(!drawerOpen)
 
     // addGame({
