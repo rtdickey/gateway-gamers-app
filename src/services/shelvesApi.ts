@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react"
 
 import { supabase } from "Supabase"
-import { Shelf, Game } from "types"
+import { Shelf } from "types"
 
 import { supabaseBaseQuery } from "./supabaseBaseQuery"
 

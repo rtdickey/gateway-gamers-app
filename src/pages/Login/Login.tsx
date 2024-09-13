@@ -3,6 +3,7 @@ import React from "react"
 import { Auth } from "@supabase/auth-ui-react"
 import { ThemeSupa } from "@supabase/auth-ui-shared"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 import Button from "components/Button"
 import useSession from "hooks/Supabase/useSession"
@@ -22,9 +23,14 @@ const Login: React.FC = () => {
       options: {
         // set this to false if you do not want the user to be automatically signed up
         shouldCreateUser: true,
-        emailRedirectTo: "https://gatewaygamers.com/GameKeep",
       },
     })
+    if (error) {
+      console.error("Error:", error.message)
+      toast.error(error.message, { theme: "colored" })
+      return
+    }
+    navigate("/Welcome")
   }
 
   return (
