@@ -17,20 +17,28 @@ const GameKeep: React.FC = () => {
   return (
     <>
       {shelves && !shelvesError && (
-        <div className='flex'>
-          <div className='flex-1'>
-            <h1 className='text-2xl'>Board Game Keep</h1>
-            <hr className='mt-2 mb-2' />
-            <div className='flex mt-5 mb-5 text-sm items-center gap-x-4 font-semibold'>
-              <label>Shelf: </label>
-              <ShelfSelect onSelect={handleSelectCallback} />
+        <>
+          <div className='flex'>
+            <div className='flex-1 items-center gap-x-4'>
+              <h1 className='text-2xl'>Board Game Keep</h1>
+              <hr className='border-1 border-accent m-2' />
+              <div className='flex flex-col gap-y-4'>
+                <div className='flex gap-x-4'>
+                  <div className='flex mt-5 mb-5 text-sm items-center gap-x-4 font-semibold'>
+                    <label>Shelf: </label>
+                    <ShelfSelect onSelect={handleSelectCallback} />
+                  </div>
+                </div>
+                <div className='flex gap-x-4'>
+                  <Shelf shelfId={selectedShelf} />
+                </div>
+              </div>
             </div>
-            <Shelf shelfId={selectedShelf} />
+            <div>
+              <GameSearch />
+            </div>
           </div>
-          <div>
-            <GameSearch />
-          </div>
-        </div>
+        </>
       )}
     </>
   )

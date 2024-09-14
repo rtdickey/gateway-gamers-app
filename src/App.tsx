@@ -1,6 +1,7 @@
 import React from "react"
 
 import { Routes, Route } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 
 import Layout from "components/Layout"
 import ProtectedRoute from "components/ProtectedRoute/ProtectedRoute"
@@ -10,8 +11,10 @@ import Home from "pages/Home"
 import Login from "pages/Login"
 import NotFound from "pages/NotFound"
 import Profile from "pages/Profile"
+import Welcome from "pages/Welcome"
 
 import "./App.css"
+import "react-toastify/dist/ReactToastify.css"
 
 function App() {
   const { isAuthenticated } = useSession()
@@ -22,6 +25,7 @@ function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path='Login' element={<Login />} />
+          <Route path='Welcome' element={<Welcome />} />
           <Route
             path='GameKeep'
             element={
@@ -41,6 +45,7 @@ function App() {
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
+      <ToastContainer position='top-center' />
     </div>
   )
 }

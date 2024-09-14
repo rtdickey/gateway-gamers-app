@@ -18,7 +18,11 @@ const userGamesApi = createApi({
   endpoints: builder => ({
     getAllUserGames: builder.query<UserGame[], void>({
       queryFn: async () => {
-        const { data, error } = await supabase.from("UserGames").select("id, game_id, shelf_id")
+        const { data, error } = await supabase
+          .from("UserGames")
+          .select(
+            "id, game_id, Games (id, name, year_published, age, playing_time, min_players, max_players, bgg_game_id, thumbnail, image)",
+          )
 
         if (error) {
           return { error }
@@ -30,7 +34,12 @@ const userGamesApi = createApi({
     }),
     getUserGames: builder.query<UserGame[], string>({
       queryFn: async shelfId => {
-        const { data, error } = await supabase.from("UserGames").select("id, game_id, shelf_id").eq("shelf_id", shelfId)
+        const { data, error } = await supabase
+          .from("UserGames")
+          .select(
+            "id, game_id, Games (id, name, year_published, age, playing_time, min_players, max_players, bgg_game_id, thumbnail, image)",
+          )
+          .eq("shelf_id", shelfId)
 
         if (error) {
           return { error }
@@ -45,7 +54,9 @@ const userGamesApi = createApi({
         const { data, error } = await supabase
           .from("UserGames")
           .insert({ shelf_id: shelfId, game_id: gameId, user_id: userId })
-          .select("id, game_id, shelf_id")
+          .select(
+            "id, game_id, Games (id, name, year_published, age, playing_time, min_players, max_players, bgg_game_id, thumbnail, image)",
+          )
 
         if (error) {
           return { error }
