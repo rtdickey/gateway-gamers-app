@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React from "react"
 
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
@@ -8,14 +8,16 @@ import logo from "assets/gateway-gamers-logo.png"
 import useSession from "hooks/Supabase/useSession"
 
 const navigation = [
-  { name: "Game Keep", href: "/GameKeep", current: false, auth: true },
-  { name: "About", href: "/", current: true, auth: false },
-  { name: "Login", href: "/Login", current: false, auth: false },
+  { name: "Game Keep", href: "/GameKeep", current: false, auth: true, hideWhenAuthenticated: false },
+  { name: "About", href: "/", current: true, auth: false, hideWhenAuthenticated: false },
+  { name: "Login", href: "/Login", current: false, auth: false, hideWhenAuthenticated: true },
 ]
 
 const Nav2 = () => {
   const { isAuthenticated, handleSignOut } = useSession()
 
+  const unauthenticatedNavigation = navigation.filter(item => !item.auth)
+  const authenticatedNavigation = navigation.filter(item => !item.hideWhenAuthenticated)
   return (
     <Disclosure as='nav' className='bg-secondary'>
       <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
@@ -35,10 +37,8 @@ const Nav2 = () => {
             </div>
             <div className='hidden sm:ml-6 sm:block'>
               <div className='flex space-x-4'>
-                {navigation.map(item => {
-                  if (item.auth && !isAuthenticated) return
-                  if (item.name === "Login" && isAuthenticated) return
-                  return (
+                {!isAuthenticated &&
+                  unauthenticatedNavigation.map(item => (
                     <NavLink
                       to={item.href}
                       key={item.name}
@@ -51,8 +51,24 @@ const Nav2 = () => {
                     >
                       {item.name}
                     </NavLink>
-                  )
-                })}
+                  ))}
+                {isAuthenticated &&
+                  authenticatedNavigation.map(item => {
+                    return (
+                      <NavLink
+                        to={item.href}
+                        key={item.name}
+                        className={({ isActive }) =>
+                          [
+                            isActive ? "bg-accent text-gray-800" : "text-gray-800 hover:bg-accent hover:text-gray-800",
+                            "rounded-md px-3 py-2 text-sm font-medium",
+                          ].join(" ")
+                        }
+                      >
+                        {item.name}
+                      </NavLink>
+                    )
+                  })}
               </div>
             </div>
           </div>

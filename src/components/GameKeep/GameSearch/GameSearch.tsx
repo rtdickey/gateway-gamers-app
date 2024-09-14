@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 
 import { skipToken } from "@reduxjs/toolkit/query"
 
@@ -10,7 +10,6 @@ import { ScrollArea } from "components/ScrollArea"
 import { Separator } from "components/Separator"
 import { useGetBoardGameByIdQuery, useGetBoardGameBySearchQuery } from "services/bggApi"
 import { AddGameRequest, useAddGameMutation, useGetGamesByBggGameIdQuery } from "services/gamesApi"
-import { useAddUserGameMutation } from "services/userGamesApi"
 import { BaseGame } from "types"
 
 import GameDetails from "../GameDetail"
@@ -52,14 +51,14 @@ const GameSearch: React.FC = () => {
     setSelectedBggGameId(game.bgg_game_id)
   }
 
-  const handleDrawerOpen = () => {
+  const handleDrawerOpen = useCallback(() => {
     setDrawerOpen(!drawerOpen)
-  }
+  }, [setDrawerOpen, drawerOpen])
 
-  const handleDrawerClose = () => {
+  const handleDrawerClose = useCallback(() => {
     setSelectedBggGameId(null)
     setDrawerOpen(!drawerOpen)
-  }
+  }, [setSelectedBggGameId, setDrawerOpen, drawerOpen])
 
   useEffect(() => {
     if (!!gameDetails && gameDetails.length === 0 && !!bggGameDetails) {
