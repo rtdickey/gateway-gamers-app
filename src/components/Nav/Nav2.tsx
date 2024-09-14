@@ -7,16 +7,14 @@ import { NavLink } from "react-router-dom"
 import logo from "assets/gateway-gamers-logo.png"
 import useSession from "hooks/Supabase/useSession"
 
+const navigation = [
+  { name: "Game Keep", href: "/GameKeep", current: false, auth: true },
+  { name: "About", href: "/", current: true, auth: false },
+  { name: "Login", href: "/Login", current: false, auth: false },
+]
+
 const Nav2 = () => {
   const { isAuthenticated, handleSignOut } = useSession()
-
-  const navigation = useMemo(() => {
-    return [
-      { name: "Game Keep", href: "/GameKeep", current: false, auth: true },
-      { name: "About", href: "/", current: true, auth: false },
-      { name: "Login", href: "/Login", current: false, auth: false },
-    ]
-  }, [isAuthenticated])
 
   return (
     <Disclosure as='nav' className='bg-secondary'>
@@ -83,12 +81,12 @@ const Nav2 = () => {
                     </NavLink>
                   </MenuItem>
                   <MenuItem>
-                    <a
+                    <div
                       className='block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100'
                       onClick={handleSignOut}
                     >
                       Sign out
-                    </a>
+                    </div>
                   </MenuItem>
                 </MenuItems>
               </Menu>

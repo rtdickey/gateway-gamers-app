@@ -17,7 +17,6 @@ import GameDetails from "../GameDetail"
 
 const GameSearch: React.FC = () => {
   const [addGame] = useAddGameMutation()
-  const [addGameToShelf] = useAddUserGameMutation()
   const [searchedGames, setSearchedGames] = useState<BaseGame[]>([])
   const [searchInput, setSearchInput] = useState<string>("")
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
@@ -82,7 +81,7 @@ const GameSearch: React.FC = () => {
     if (!!gameDetails?.[0]) {
       handleDrawerOpen()
     }
-  }, [gameDetails])
+  }, [gameDetails, addGame, bggGameDetails, handleDrawerOpen])
 
   return (
     <>
