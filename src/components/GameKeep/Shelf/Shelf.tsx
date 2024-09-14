@@ -13,7 +13,7 @@ const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
   const { data: games } = useGetUserGamesQuery(shelfId.length ? shelfId : skipToken)
   console.log("games: ", games)
   return (
-    <div className='flex flex-col'>
+    <div className='flex-1 flex-col'>
       {shelfId && games ? (
         <div>
           {games.map((game, index) => {
@@ -21,7 +21,7 @@ const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
             const gameInfo = game.Games as unknown as Game
             console.log("game: ", gameInfo)
             return (
-              <div key={index} className='flex flex-row p-4 border rounded-md'>
+              <div key={index} className='flex flex-row p-4 border rounded-md w-full'>
                 <div className='p-3'>
                   {gameInfo?.thumbnail && <img src={gameInfo.thumbnail} alt={gameInfo?.name} className='h-20 m-auto' />}
                 </div>
