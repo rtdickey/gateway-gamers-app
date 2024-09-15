@@ -23,11 +23,11 @@ const Login: React.FC = () => {
       toast.error("Email is required", { theme: "colored" })
       return
     }
-
-    const { error } = await supabase.auth.signInWithOtp({
+    const { data, error } = await supabase.auth.signInWithOtp({
       email: email,
       options: {
         shouldCreateUser: true,
+        emailRedirectTo: `${process.env.REACT_APP_REDIRECT_URL}/GameKeep`,
       },
     })
     if (error) {
