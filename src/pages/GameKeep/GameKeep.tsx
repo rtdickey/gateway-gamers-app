@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import { faDice, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -17,6 +17,7 @@ const GameKeep: React.FC = () => {
   const [selectedShelf, setSelectedShelf] = React.useState<string>(shelves?.[0].id.toString() ?? "")
 
   const handleSelectCallback = (value: string) => {
+    console.log("here", value)
     setSelectedShelf(value)
   }
 
@@ -48,7 +49,7 @@ const GameKeep: React.FC = () => {
                   <div>
                     <div className='flex text-sm items-center gap-x-4 font-semibold mb-5'>
                       <label>Shelf: </label>
-                      <ShelfSelect onSelect={handleSelectCallback} />
+                      <ShelfSelect shelfId={selectedShelf} onSelect={handleSelectCallback} />
                     </div>
                     <Shelf shelfId={selectedShelf} />
                   </div>
