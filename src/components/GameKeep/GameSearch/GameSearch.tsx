@@ -80,11 +80,11 @@ const GameSearch: React.FC = () => {
     if (!!gameDetails?.[0]) {
       handleDrawerOpen()
     }
-  }, [gameDetails, addGame, bggGameDetails, handleDrawerOpen])
+  }, [])
 
   return (
     <>
-      <Card>
+      <Card className='border-0'>
         <CardContent className='pt-5'>
           <div>
             <Input placeholder='Search for a game' value={searchInput} onChange={handleOnChange} />
@@ -98,7 +98,7 @@ const GameSearch: React.FC = () => {
             </Button>
           </div>
           {searchQuery && (
-            <ScrollArea className='h-72 w-48 rounded-md border'>
+            <ScrollArea className='h-72 w-full rounded-md'>
               <div className='p-4'>
                 {searchedGames?.map(game => (
                   <div key={game.bgg_game_id}>
