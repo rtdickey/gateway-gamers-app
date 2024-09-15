@@ -52,12 +52,13 @@ const GameSearch: React.FC = () => {
   }
 
   const handleDrawerOpen = useCallback(() => {
-    setDrawerOpen(!drawerOpen)
+    console.log("handleDrawerOpen", true)
+    setDrawerOpen(true)
   }, [setDrawerOpen, drawerOpen])
 
   const handleDrawerClose = useCallback(() => {
     setSelectedBggGameId(null)
-    setDrawerOpen(!drawerOpen)
+    setDrawerOpen(false)
   }, [setSelectedBggGameId, setDrawerOpen, drawerOpen])
 
   useEffect(() => {

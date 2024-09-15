@@ -17,7 +17,6 @@ const GameKeep: React.FC = () => {
   const [selectedShelf, setSelectedShelf] = React.useState<string>(shelves?.[0].id.toString() ?? "")
 
   const handleSelectCallback = (value: string) => {
-    console.log("here", value)
     setSelectedShelf(value)
   }
 

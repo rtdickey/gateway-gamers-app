@@ -4,9 +4,14 @@ import { supabase } from "Supabase"
 import { User } from "types"
 
 import { supabaseBaseQuery } from "./supabaseBaseQuery"
+import { PostgrestError } from "@supabase/supabase-js"
 
 export interface UserRequest {
-  userId: string | null
+  userId: string
+}
+
+export interface UpsertUserRequest extends UserRequest {
+  display_name: string
 }
 
 const usersApi = createApi({
@@ -22,7 +27,7 @@ const usersApi = createApi({
 
         const { data, error } = await supabase
           .from("Users")
-          .select("id, full_name", {})
+          .select("id, display_name", {})
           .eq("id", userId)
           .limit(1)
           .single()
@@ -35,8 +40,19 @@ const usersApi = createApi({
       },
       providesTags: ["User"],
     }),
+    updateUserDetails: builder.mutation<PostgrestError | null, UpsertUserRequest>({
+      queryFn: async (userDetails: UpsertUserRequest) => {
+        const { data, error } = await supabase.from("Users").upsert(userDetails, {})
+        if (error) {
+          return { error }
+        }
+
+        return { data }
+      },
+      invalidatesTags: ["User"],
+    }),
   }),
 })
 
-export const { useGetUserDetailsQuery } = usersApi
+export const { useGetUserDetailsQuery, useUpdateUserDetailsMutation } = usersApi
 export { usersApi }

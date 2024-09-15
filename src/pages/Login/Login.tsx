@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -14,10 +14,6 @@ const Login: React.FC = () => {
   const { isAuthenticated } = useSession()
   const navigate = useNavigate()
 
-  if (isAuthenticated) {
-    navigate("/GameKeep")
-  }
-
   const handleOtpAuth = async () => {
     if (!email) {
       toast.error("Email is required", { theme: "colored" })
@@ -32,6 +28,12 @@ const Login: React.FC = () => {
       },
     })
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/GameKeep")
+    }
+  }, [isAuthenticated, navigate])
 
   return (
     <div className='w-full max-w-xs m-auto'>

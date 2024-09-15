@@ -33,6 +33,12 @@ export interface GameSearchRequest {
   pageSize?: number
 }
 
+interface BggNameObject {
+  type: string
+  sortIndex: string
+  value: string
+}
+
 const bggApi = createApi({
   reducerPath: "bggApi",
   baseQuery: fetchBaseQuery({ baseUrl: "https://api.geekdo.com/xmlapi2/" }),
@@ -49,7 +55,9 @@ const bggApi = createApi({
 
         return {
           id: "tempId",
-          name: item?.name.value ?? "",
+          name: Array.isArray(item?.name)
+            ? item.name.filter((arr: BggNameObject) => arr.type === "primary")?.[0]?.value
+            : (item?.name.value ?? ""),
           year_published: item?.yearpublished?.value ?? null,
           min_players: item?.minplayers?.value ?? null,
           max_players: item?.maxplayers?.value ?? null,
