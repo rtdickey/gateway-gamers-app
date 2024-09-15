@@ -11,7 +11,6 @@ import Home from "pages/Home"
 import Login from "pages/Login"
 import NotFound from "pages/NotFound"
 import Profile from "pages/Profile"
-import Welcome from "pages/Welcome"
 
 import "./App.css"
 import "react-toastify/dist/ReactToastify.css"
@@ -25,7 +24,6 @@ function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path='Login' element={<Login />} />
-          <Route path='Welcome' element={<Welcome />} />
           <Route
             path='GameKeep'
             element={
