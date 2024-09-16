@@ -1,11 +1,11 @@
-import React from "react"
-
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline"
+import { skipToken } from "@reduxjs/toolkit/query"
 import { NavLink } from "react-router-dom"
 
 import logo from "assets/gateway-gamers-logo.png"
 import useSession from "hooks/Supabase/useSession"
+import { useGetUserDetailsQuery } from "services/userApi"
 
 const navigation = [
   { name: "Game Keep", href: "/GameKeep", current: false, auth: true, hideWhenAuthenticated: false },
@@ -14,7 +14,10 @@ const navigation = [
 ]
 
 const Nav2 = () => {
-  const { isAuthenticated, handleSignOut } = useSession()
+  const { isAuthenticated, handleSignOut, session } = useSession()
+  const user = session?.user
+  const { data: userDetails } = useGetUserDetailsQuery(user ? { id: user.id } : skipToken)
+  const userDisplayName = userDetails?.display_name.slice(0, 1) ?? "GG"
 
   const unauthenticatedNavigation = navigation.filter(item => !item.auth)
   const authenticatedNavigation = navigation.filter(item => !item.hideWhenAuthenticated)
@@ -80,11 +83,9 @@ const Nav2 = () => {
                   <MenuButton className='relative flex rounded-full bg-accent text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-primary'>
                     <span className='absolute -inset-1.5' />
                     <span className='sr-only'>Open user menu</span>
-                    <img
-                      alt=''
-                      src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                      className='h-8 w-8 rounded-full'
-                    />
+                    <div className='h-8 w-8 rounded-full ring-1 ring-primary bg-accent text-gray-800 font-bold flex items-center justify-center'>
+                      {userDisplayName}
+                    </div>
                   </MenuButton>
                 </div>
                 <MenuItems
