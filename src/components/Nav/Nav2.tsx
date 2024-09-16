@@ -113,18 +113,37 @@ const Nav2 = () => {
       </div>
 
       <DisclosurePanel className='sm:hidden'>
-        <div className='space-y-1 px-2 pb-3 pt-2'>
-          {navigation.map(item => (
-            <DisclosureButton
-              key={item.name}
-              as='a'
-              href={item.href}
-              aria-current={item.current ? "page" : undefined}
-              className={`${item.current ? "bg-accent text-black" : "text-dark hover:bg-accent hover:text-white"} block rounded-md px-3 py-2 text-base font-medium`}
-            >
-              {item.name}
-            </DisclosureButton>
-          ))}
+        <div className='space-y-1 px-2 pb-3 pt-2 flex flex-col'>
+          {!isAuthenticated &&
+            unauthenticatedNavigation.map(item => (
+              <NavLink
+                to={item.href}
+                key={item.name}
+                className={({ isActive }) =>
+                  [
+                    isActive ? "bg-accent text-gray-800" : "flex-1 text-gray-800 hover:bg-accent hover:text-gray-800",
+                    "rounded-md px-3 py-2 text-sm font-medium",
+                  ].join(" ")
+                }
+              >
+                {item.name}
+              </NavLink>
+            ))}
+          {isAuthenticated &&
+            authenticatedNavigation.map(item => (
+              <NavLink
+                to={item.href}
+                key={item.name}
+                className={({ isActive }) =>
+                  [
+                    isActive ? "bg-accent text-gray-800" : "flex-1 text-gray-800 hover:bg-accent hover:text-gray-800",
+                    "rounded-md px-3 py-2 text-sm font-medium",
+                  ].join(" ")
+                }
+              >
+                {item.name}
+              </NavLink>
+            ))}
         </div>
       </DisclosurePanel>
     </Disclosure>
