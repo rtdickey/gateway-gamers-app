@@ -13,7 +13,7 @@ const Layout = () => {
     <>
       <Nav2 />
       <div className='flex'>
-        <div className='flex-1 h-screen'>
+        <div className='flex-1 min-h-screen'>
           <div className='p-7 flex-1 h-full'>
             <Outlet />
           </div>

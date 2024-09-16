@@ -61,10 +61,6 @@ const GameSearch: React.FC = () => {
       } as AddGameRequest)
       setSelectedBggGameId(bggGameDetails.bgg_game_id)
     }
-
-    // if (!!gameDetails?.[0]) {
-    //   handleDrawerOpen()
-    // }
   }, [])
 
   return (
@@ -73,7 +69,7 @@ const GameSearch: React.FC = () => {
         <Input placeholder='Search for a game' value={searchInput} onChange={handleOnChange} />
       </div>
       <div className='flex justify-items-end m-2'>
-        <Button variant='ghost' size='sm' onClick={handleSearch}>
+        <Button variant='ghostSecondary' size='sm' onClick={handleSearch}>
           Search
         </Button>
         <Button variant='ghost' size='sm' onClick={handleClear}>
