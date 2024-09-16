@@ -22,7 +22,7 @@ const gamesApi = createApi({
   baseQuery: supabaseBaseQuery(),
   tagTypes: ["Games"],
   endpoints: builder => ({
-    getGamesByBggGameId: builder.query<Game[], number>({
+    getGamesByBggGameId: builder.query<Game, number>({
       queryFn: async bggGameId => {
         const { data, error } = await supabase
           .from("Games")
@@ -30,6 +30,8 @@ const gamesApi = createApi({
             "id, name, year_published, min_players, max_players, playing_time, age, thumbnail, image, bgg_game_id",
           )
           .eq("bgg_game_id", bggGameId)
+          .limit(1)
+          .single()
 
         if (error) {
           return { error }

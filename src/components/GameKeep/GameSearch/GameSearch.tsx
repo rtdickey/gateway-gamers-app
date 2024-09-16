@@ -3,16 +3,13 @@ import React, { useCallback, useEffect, useState } from "react"
 import { skipToken } from "@reduxjs/toolkit/query"
 
 import Button from "components/Button"
-import { Card, CardContent } from "components/Card"
-import { Drawer } from "components/Drawer"
 import { Input } from "components/Input"
-import { ScrollArea } from "components/ScrollArea"
-import { Separator } from "components/Separator"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
 import { useGetBoardGameByIdQuery, useGetBoardGameBySearchQuery } from "services/bggApi"
-import { AddGameRequest, useAddGameMutation, useGetGamesByBggGameIdQuery } from "services/gamesApi"
+import { AddGameRequest, useAddGameMutation } from "services/gamesApi"
 import { BaseGame } from "types"
 
-import GameDetails from "../GameDetail"
+import GameDrawer from "../GameDrawer"
 
 const GameSearch: React.FC = () => {
   const [addGame] = useAddGameMutation()
@@ -20,18 +17,21 @@ const GameSearch: React.FC = () => {
   const [searchInput, setSearchInput] = useState<string>("")
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
   const [selectedBggGameId, setSelectedBggGameId] = useState<number | null>(null)
-  const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
+  const [openDrawer, setOpenDrawer] = useState(false)
 
   const { data: bggGameDetails } = useGetBoardGameByIdQuery(selectedBggGameId ?? skipToken)
-  const { data: gameDetails } = useGetGamesByBggGameIdQuery(selectedBggGameId ?? skipToken)
 
   const { data: games } = useGetBoardGameBySearchQuery(
     searchQuery ? { name: searchQuery, page: 1, pageSize: 10 } : skipToken,
   )
 
-  const handleSearch = () => {
-    setSearchQuery(searchInput)
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value)
   }
+
+  const handleSearch = useCallback(() => {
+    setSearchQuery(searchInput)
+  }, [searchInput])
 
   const handleClear = () => {
     setSearchInput("")
@@ -39,30 +39,16 @@ const GameSearch: React.FC = () => {
   }
 
   useEffect(() => {
-    // setSearchedGames(games?.filter(g => userGames?.every(ug => ug.bgg_game_id !== g.bgg_game_id)) ?? [])
     setSearchedGames(games ?? [])
   }, [games])
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-  }
-
   const handleGameSelect = (game: BaseGame) => {
     setSelectedBggGameId(game.bgg_game_id)
+    setOpenDrawer(true)
   }
 
-  const handleDrawerOpen = useCallback(() => {
-    setDrawerOpen(!drawerOpen)
-  }, [setDrawerOpen, drawerOpen])
-
-  const handleDrawerClose = useCallback(() => {
-    setSelectedBggGameId(null)
-    setDrawerOpen(!drawerOpen)
-  }, [setSelectedBggGameId, setDrawerOpen, drawerOpen])
-
   useEffect(() => {
-    if (!!gameDetails && gameDetails.length === 0 && !!bggGameDetails) {
-      setSelectedBggGameId(null)
+    if (bggGameDetails) {
       addGame({
         name: bggGameDetails.name ?? "",
         year_published: bggGameDetails.year_published ?? null,
@@ -74,48 +60,43 @@ const GameSearch: React.FC = () => {
         image: bggGameDetails.image ?? "",
         bgg_game_id: bggGameDetails.bgg_game_id ?? 0,
       } as AddGameRequest)
-      setSelectedBggGameId(bggGameDetails.bgg_game_id)
     }
-
-    if (!!gameDetails?.[0]) {
-      handleDrawerOpen()
-    }
-  }, [gameDetails, addGame, bggGameDetails, handleDrawerOpen])
+  }, [bggGameDetails, addGame])
 
   return (
     <>
-      <Card>
-        <CardContent className='pt-5'>
-          <div>
-            <Input placeholder='Search for a game' value={searchInput} onChange={handleOnChange} />
-          </div>
-          <div className='flex justify-items-end m-2'>
-            <Button variant='ghost' size='sm' onClick={handleSearch}>
-              Search
-            </Button>
-            <Button variant='ghost' size='sm' onClick={handleClear}>
-              Clear
-            </Button>
-          </div>
-          {searchQuery && (
-            <ScrollArea className='h-72 w-48 rounded-md border'>
-              <div className='p-4'>
-                {searchedGames?.map(game => (
-                  <div key={game.bgg_game_id}>
-                    <div className='text-sm hover:bg-accent cursor-pointer p-3' onClick={() => handleGameSelect(game)}>
-                      {game.name}
-                    </div>
-                    <Separator />
-                  </div>
-                ))}
-              </div>
-            </ScrollArea>
-          )}
-        </CardContent>
-      </Card>
-      <Drawer open={drawerOpen} onClose={handleDrawerClose}>
-        <GameDetails game={gameDetails?.length ? gameDetails[0] : null} handleOnClickCancel={handleDrawerClose} />
-      </Drawer>
+      <div>
+        <Input placeholder='Search BGG' value={searchInput} onChange={handleOnChange} />
+      </div>
+      <div className='flex justify-items-end m-2'>
+        <Button variant='ghostSecondary' size='sm' onClick={handleSearch}>
+          Search
+        </Button>
+        <Button variant='ghost' size='sm' onClick={handleClear}>
+          Clear
+        </Button>
+      </div>
+      {searchQuery && (
+        <Table className='w-full'>
+          <TableHeader>
+            <TableRow>
+              <TableHead>BGG ID</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Year Published</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {searchedGames?.map(game => (
+              <TableRow key={game.bgg_game_id} className='cursor-pointer' onClick={() => handleGameSelect(game)}>
+                <TableCell>{game.bgg_game_id}</TableCell>
+                <TableCell>{game.name}</TableCell>
+                <TableCell>{game.year_published}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
+      <GameDrawer open={openDrawer} setOpen={setOpenDrawer} bggGameId={selectedBggGameId} />
     </>
   )
 }
