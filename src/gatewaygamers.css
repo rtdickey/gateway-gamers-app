@@ -864,6 +864,10 @@ body:is(.dark *) {
   height: calc(100dvh);
 }
 
+.h-40 {
+  height: 10rem;
+}
+
 .max-h-96 {
   max-height: 24rem;
 }
@@ -938,6 +942,10 @@ body:is(.dark *) {
 
 .w-full {
   width: 100%;
+}
+
+.w-40 {
+  width: 10rem;
 }
 
 .min-w-\[8rem\] {
@@ -1986,6 +1994,10 @@ body:is(.dark *) {
 
   .sm\:hidden {
     display: none;
+  }
+
+  .sm\:max-w-\[425px\] {
+    max-width: 425px;
   }
 
   .sm\:flex-row {

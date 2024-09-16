@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import { faDice, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -6,6 +6,7 @@ import { skipToken } from "@reduxjs/toolkit/query"
 import { useNavigate } from "react-router-dom"
 
 import Button from "components/Button"
+import GameDrawer from "components/GameKeep/GameDrawer"
 import GameSearch from "components/GameKeep/GameSearch"
 import Shelf from "components/GameKeep/Shelf"
 import ShelfSelect from "components/GameKeep/ShelfSelect"
@@ -65,13 +66,15 @@ const GameKeep: React.FC = () => {
                   <GameSearch />
                 </div>
               ) : (
-                <div>
-                  <div className='flex text-sm items-center gap-x-4 font-semibold mb-5'>
-                    <label>Shelf: </label>
-                    <ShelfSelect shelfId={selectedShelf} onSelect={handleSelectCallback} />
+                <>
+                  <div>
+                    <div className='flex text-sm items-center gap-x-4 font-semibold mb-5'>
+                      <label>Shelf: </label>
+                      <ShelfSelect shelfId={selectedShelf} onSelect={handleSelectCallback} />
+                    </div>
+                    <Shelf shelfId={selectedShelf} />
                   </div>
-                  <Shelf shelfId={selectedShelf} />
-                </div>
+                </>
               )}
             </div>
           </div>
