@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 
 import { skipToken } from "@reduxjs/toolkit/query"
 
-import bggLogo from "assets/powered_by_bgg.webp"
 import Button from "components/Button"
 import { Input } from "components/Input"
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
@@ -24,9 +23,13 @@ const GameSearch: React.FC = () => {
     searchQuery ? { name: searchQuery, page: 1, pageSize: 10 } : skipToken,
   )
 
-  const handleSearch = () => {
-    setSearchQuery(searchInput)
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value)
   }
+
+  const handleSearch = useCallback(() => {
+    setSearchQuery(searchInput)
+  }, [searchInput])
 
   const handleClear = () => {
     setSearchInput("")
@@ -37,36 +40,33 @@ const GameSearch: React.FC = () => {
     setSearchedGames(games ?? [])
   }, [games])
 
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-  }
-
   const handleGameSelect = (game: BaseGame) => {
     setSelectedBggGameId(game.bgg_game_id)
+    alert(`Selected game: ${game.name}`)
   }
 
-  useEffect(() => {
-    if (!!gameDetails && gameDetails.length === 0 && !!bggGameDetails) {
-      setSelectedBggGameId(null)
-      addGame({
-        name: bggGameDetails.name ?? "",
-        year_published: bggGameDetails.year_published ?? null,
-        min_players: bggGameDetails.min_players ?? null,
-        max_players: bggGameDetails.max_players ?? null,
-        playing_time: bggGameDetails.playing_time ?? null,
-        age: bggGameDetails.age ?? null,
-        thumbnail: bggGameDetails.thumbnail ?? "",
-        image: bggGameDetails.image ?? "",
-        bgg_game_id: bggGameDetails.bgg_game_id ?? 0,
-      } as AddGameRequest)
-      setSelectedBggGameId(bggGameDetails.bgg_game_id)
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (!!gameDetails && gameDetails.length === 0 && !!bggGameDetails) {
+  //     setSelectedBggGameId(null)
+  //     addGame({
+  //       name: bggGameDetails.name ?? "",
+  //       year_published: bggGameDetails.year_published ?? null,
+  //       min_players: bggGameDetails.min_players ?? null,
+  //       max_players: bggGameDetails.max_players ?? null,
+  //       playing_time: bggGameDetails.playing_time ?? null,
+  //       age: bggGameDetails.age ?? null,
+  //       thumbnail: bggGameDetails.thumbnail ?? "",
+  //       image: bggGameDetails.image ?? "",
+  //       bgg_game_id: bggGameDetails.bgg_game_id ?? 0,
+  //     } as AddGameRequest)
+  //     setSelectedBggGameId(bggGameDetails.bgg_game_id)
+  //   }
+  // }, [])
 
   return (
     <>
       <div>
-        <Input placeholder='Search for a game' value={searchInput} onChange={handleOnChange} />
+        <Input placeholder='Search BGG' value={searchInput} onChange={handleOnChange} />
       </div>
       <div className='flex justify-items-end m-2'>
         <Button variant='ghostSecondary' size='sm' onClick={handleSearch}>
@@ -80,13 +80,17 @@ const GameSearch: React.FC = () => {
         <Table className='w-full'>
           <TableHeader>
             <TableRow>
+              <TableHead>BGG ID</TableHead>
               <TableHead>Name</TableHead>
+              <TableHead>Year Published</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {searchedGames?.map(game => (
-              <TableRow key={game.bgg_game_id}>
-                <TableCell onClick={() => handleGameSelect(game)}>{game.name}</TableCell>
+              <TableRow key={game.bgg_game_id} className='cursor-pointer' onClick={() => handleGameSelect(game)}>
+                <TableCell>{game.bgg_game_id}</TableCell>
+                <TableCell>{game.name}</TableCell>
+                <TableCell>{game.year_published}</TableCell>
               </TableRow>
             ))}
           </TableBody>
