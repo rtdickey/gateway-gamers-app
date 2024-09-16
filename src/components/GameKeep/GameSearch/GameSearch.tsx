@@ -6,7 +6,7 @@ import Button from "components/Button"
 import { Input } from "components/Input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
 import { useGetBoardGameByIdQuery, useGetBoardGameBySearchQuery } from "services/bggApi"
-import { AddGameRequest, useAddGameMutation, useGetGamesByBggGameIdQuery } from "services/gamesApi"
+import { AddGameRequest, useAddGameMutation } from "services/gamesApi"
 import { BaseGame } from "types"
 
 import GameDrawer from "../GameDrawer"

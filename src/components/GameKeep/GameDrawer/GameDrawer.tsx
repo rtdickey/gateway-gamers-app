@@ -1,10 +1,8 @@
-import { useState } from "react"
-
 import { useMediaQuery } from "@react-hook/media-query"
 import { skipToken } from "@reduxjs/toolkit/query"
 
 import Button from "components/Button"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "components/Dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "components/Dialog"
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "components/Drawer"
 import { useGetGamesByBggGameIdQuery } from "services/gamesApi"
 

@@ -23,7 +23,7 @@ const ShelfSelect: React.FC<ShelfSelectProps> = ({ shelfId, onSelect }) => {
     if (!!onSelect) {
       onSelect(shelves?.[0].id.toString() ?? "")
     }
-  }, [shelves])
+  }, [shelves, onSelect])
 
   return (
     <Select onValueChange={onSelect} value={shelfId}>

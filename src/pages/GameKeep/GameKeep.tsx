@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 
 import { faDice, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -6,7 +6,6 @@ import { skipToken } from "@reduxjs/toolkit/query"
 import { useNavigate } from "react-router-dom"
 
 import Button from "components/Button"
-import GameDrawer from "components/GameKeep/GameDrawer"
 import GameSearch from "components/GameKeep/GameSearch"
 import Shelf from "components/GameKeep/Shelf"
 import ShelfSelect from "components/GameKeep/ShelfSelect"
@@ -22,7 +21,7 @@ const GameKeep: React.FC = () => {
   const { data: userDetails } = useGetUserDetailsQuery(user ? { id: user.id } : skipToken)
 
   const [showGameSearch, setShowGameSearch] = React.useState<boolean>(false)
-  const { data: shelves, error: shelvesError } = useShelves()
+  const { data: shelves } = useShelves()
   const [selectedShelf, setSelectedShelf] = React.useState<string>(shelves?.[0].id.toString() ?? "")
 
   const handleSelectCallback = (value: string) => {

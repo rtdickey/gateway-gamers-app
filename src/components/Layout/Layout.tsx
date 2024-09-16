@@ -1,5 +1,3 @@
-import React from "react"
-
 import { Outlet } from "react-router-dom"
 
 import bggLogo from "assets/powered_by_bgg.webp"
