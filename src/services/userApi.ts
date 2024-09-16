@@ -1,16 +1,17 @@
 import { createApi } from "@reduxjs/toolkit/query/react"
+import { PostgrestError } from "@supabase/supabase-js"
 
 import { supabase } from "Supabase"
 import { User } from "types"
 
 import { supabaseBaseQuery } from "./supabaseBaseQuery"
-import { PostgrestError } from "@supabase/supabase-js"
 
 export interface UserRequest {
-  userId: string
+  id: string
 }
 
 export interface UpsertUserRequest extends UserRequest {
+  email: string
   display_name: string
 }
 
@@ -20,17 +21,17 @@ const usersApi = createApi({
   tagTypes: ["User"],
   endpoints: builder => ({
     getUserDetails: builder.query<User | null, UserRequest>({
-      queryFn: async ({ userId }: UserRequest) => {
-        if (!userId) {
+      queryFn: async ({ id }: UserRequest) => {
+        if (!id) {
           return { data: null }
         }
 
         const { data, error } = await supabase
           .from("Users")
-          .select("id, display_name", {})
-          .eq("id", userId)
+          .select("id, display_name, email", {})
+          .eq("id", id)
           .limit(1)
-          .single()
+          .maybeSingle()
 
         if (error) {
           return { error }
