@@ -11,7 +11,6 @@ interface ShelfProps {
 
 const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
   const { data: games } = useGetUserGamesQuery(shelfId.length ? shelfId : skipToken)
-  console.log("games: ", games)
   return (
     <div className='flex-1 flex-col'>
       {shelfId && games ? (

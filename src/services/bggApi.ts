@@ -44,31 +44,52 @@ const bggApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://api.geekdo.com/xmlapi2/" }),
   tagTypes: ["BGG_Games"],
   endpoints: builder => ({
-    getBoardGamesById: builder.query<Game[], number>({
+    getBoardGamesById: builder.query<Game[], string>({
       query: bggGameIds => ({
         url: `thing?id=${bggGameIds}`,
         responseHandler: response => response.text(),
       }),
       transformResponse: (response: any) => {
         const responseJson = convertResponseToJson(response)
-        const items: Game[] = responseJson.items?.map((item: any) => {
-          return {
-            id: "0",
-            name: Array.isArray(item?.name)
-              ? item.name.filter((arr: BggNameObject) => arr.type === "primary")?.[0]?.value
-              : (item?.name.value ?? ""),
-            year_published: item?.yearpublished?.value ?? null,
-            min_players: item?.minplayers?.value ?? null,
-            max_players: item?.maxplayers?.value ?? null,
-            playing_time: item?.playingtime?.value ?? null,
-            age: item?.minage?.value ?? null,
-            thumbnail: item.thumbnail ?? null,
-            image: item.image ?? null,
-            bgg_game_id: item.id ?? "",
-          } as Game
-        })
 
-        return items
+        if (Array.isArray(responseJson.items?.item)) {
+          const items: Game[] = responseJson.items?.item.map((item: any) => {
+            return {
+              id: "0",
+              name: Array.isArray(item?.name)
+                ? item.name.filter((arr: BggNameObject) => arr.type === "primary")?.[0]?.value
+                : (item?.name.value ?? ""),
+              year_published: item?.yearpublished?.value ?? null,
+              min_players: item?.minplayers?.value ?? null,
+              max_players: item?.maxplayers?.value ?? null,
+              playing_time: item?.playingtime?.value ?? null,
+              age: item?.minage?.value ?? null,
+              thumbnail: item.thumbnail ?? null,
+              image: item.image ?? null,
+              bgg_game_id: item.id ?? "",
+            } as Game
+          })
+
+          return items
+        } else {
+          const item = responseJson.items?.item
+          return [
+            {
+              id: "0",
+              name: Array.isArray(item?.name)
+                ? item.name.filter((arr: BggNameObject) => arr.type === "primary")?.[0]?.value
+                : (item?.name.value ?? ""),
+              year_published: item?.yearpublished?.value ?? null,
+              min_players: item?.minplayers?.value ?? null,
+              max_players: item?.maxplayers?.value ?? null,
+              playing_time: item?.playingtime?.value ?? null,
+              age: item?.minage?.value ?? null,
+              thumbnail: item.thumbnail ?? null,
+              image: item.image ?? null,
+              bgg_game_id: item.id ?? "",
+            } as Game,
+          ] as Game[]
+        }
       },
       providesTags: ["BGG_Games"],
     }),

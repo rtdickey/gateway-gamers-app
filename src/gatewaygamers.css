@@ -1655,6 +1655,14 @@ body:is(.dark *) {
   color: hsl(var(--muted-foreground));
 }
 
+.hover\:absolute:hover {
+  position: absolute;
+}
+
+.hover\:h-40:hover {
+  height: 10rem;
+}
+
 .hover\:bg-accent:hover {
   background-color: hsl(var(--accent));
 }
