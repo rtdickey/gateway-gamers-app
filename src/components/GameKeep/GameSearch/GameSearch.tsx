@@ -5,7 +5,7 @@ import { skipToken } from "@reduxjs/toolkit/query"
 import Button from "components/Button"
 import { Input } from "components/Input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
-import { useGetBoardGameByIdQuery, useGetBoardGameBySearchQuery } from "services/bggApi"
+import { useGetBoardGamesByIdQuery, useGetBoardGameBySearchQuery } from "services/bggApi"
 import { AddGameRequest, useAddGameMutation } from "services/gamesApi"
 import { BaseGame } from "types"
 
@@ -19,7 +19,7 @@ const GameSearch: React.FC = () => {
   const [selectedBggGameId, setSelectedBggGameId] = useState<number | null>(null)
   const [openDrawer, setOpenDrawer] = useState(false)
 
-  const { data: bggGameDetails } = useGetBoardGameByIdQuery(selectedBggGameId ?? skipToken)
+  const { data: bggGameDetails } = useGetBoardGamesByIdQuery(selectedBggGameId ?? skipToken)
 
   const { data: games } = useGetBoardGameBySearchQuery(
     searchQuery ? { name: searchQuery, page: 1, pageSize: 10 } : skipToken,
@@ -48,17 +48,18 @@ const GameSearch: React.FC = () => {
   }
 
   useEffect(() => {
-    if (bggGameDetails) {
+    if (bggGameDetails?.length) {
+      const game = bggGameDetails[0]
       addGame({
-        name: bggGameDetails.name ?? "",
-        year_published: bggGameDetails.year_published ?? null,
-        min_players: bggGameDetails.min_players ?? null,
-        max_players: bggGameDetails.max_players ?? null,
-        playing_time: bggGameDetails.playing_time ?? null,
-        age: bggGameDetails.age ?? null,
-        thumbnail: bggGameDetails.thumbnail ?? "",
-        image: bggGameDetails.image ?? "",
-        bgg_game_id: bggGameDetails.bgg_game_id ?? 0,
+        name: game.name ?? "",
+        year_published: game.year_published ?? null,
+        min_players: game.min_players ?? null,
+        max_players: game.max_players ?? null,
+        playing_time: game.playing_time ?? null,
+        age: game.age ?? null,
+        thumbnail: game.thumbnail ?? "",
+        image: game.image ?? "",
+        bgg_game_id: game.bgg_game_id ?? 0,
       } as AddGameRequest)
     }
   }, [bggGameDetails, addGame])

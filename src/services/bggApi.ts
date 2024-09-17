@@ -44,29 +44,31 @@ const bggApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://api.geekdo.com/xmlapi2/" }),
   tagTypes: ["BGG_Games"],
   endpoints: builder => ({
-    getBoardGameById: builder.query<Game, number>({
-      query: bggGameId => ({
-        url: `thing?id=${bggGameId}`,
+    getBoardGamesById: builder.query<Game[], number>({
+      query: bggGameIds => ({
+        url: `thing?id=${bggGameIds}`,
         responseHandler: response => response.text(),
       }),
       transformResponse: (response: any) => {
         const responseJson = convertResponseToJson(response)
-        const item = responseJson.items?.item
+        const items: Game[] = responseJson.items?.map((item: any) => {
+          return {
+            id: "0",
+            name: Array.isArray(item?.name)
+              ? item.name.filter((arr: BggNameObject) => arr.type === "primary")?.[0]?.value
+              : (item?.name.value ?? ""),
+            year_published: item?.yearpublished?.value ?? null,
+            min_players: item?.minplayers?.value ?? null,
+            max_players: item?.maxplayers?.value ?? null,
+            playing_time: item?.playingtime?.value ?? null,
+            age: item?.minage?.value ?? null,
+            thumbnail: item.thumbnail ?? null,
+            image: item.image ?? null,
+            bgg_game_id: item.id ?? "",
+          } as Game
+        })
 
-        return {
-          id: "tempId",
-          name: Array.isArray(item?.name)
-            ? item.name.filter((arr: BggNameObject) => arr.type === "primary")?.[0]?.value
-            : (item?.name.value ?? ""),
-          year_published: item?.yearpublished?.value ?? null,
-          min_players: item?.minplayers?.value ?? null,
-          max_players: item?.maxplayers?.value ?? null,
-          playing_time: item?.playingtime?.value ?? null,
-          age: item?.minage?.value ?? null,
-          thumbnail: item.thumbnail ?? null,
-          image: item.image ?? null,
-          bgg_game_id: item.id ?? "",
-        }
+        return items
       },
       providesTags: ["BGG_Games"],
     }),
@@ -84,5 +86,5 @@ const bggApi = createApi({
   }),
 })
 
-export const { useGetBoardGameByIdQuery, useGetBoardGameBySearchQuery } = bggApi
+export const { useGetBoardGamesByIdQuery, useGetBoardGameBySearchQuery } = bggApi
 export { bggApi }
