@@ -7,7 +7,7 @@ import { Input } from "components/Input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
 import { useGetBoardGamesByIdQuery, useGetBoardGameBySearchQuery } from "services/bggApi"
 import { AddGameRequest, useAddGameMutation } from "services/gamesApi"
-import { BaseGame, Game } from "types"
+import { BaseGame } from "types"
 
 import GameDrawer from "../GameDrawer"
 
@@ -16,14 +16,11 @@ const GameSearch: React.FC = () => {
 
   const [searchInput, setSearchInput] = useState<string>("")
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
-  const [bggGameIds, setBggGameIds] = useState<string | null>(null)
 
   const [selectedBggGameId, setSelectedBggGameId] = useState<number | null>(null)
   const [openDrawer, setOpenDrawer] = useState(false)
 
   const { data: bggGameDetails } = useGetBoardGamesByIdQuery(selectedBggGameId?.toString() ?? skipToken)
-  const { data: searchGameDetails } = useGetBoardGamesByIdQuery(bggGameIds ?? skipToken)
-  const [allGameDetails, setAllGameDetails] = useState<Game[]>([])
 
   const { data: games } = useGetBoardGameBySearchQuery(
     searchQuery ? { name: searchQuery, page: 1, pageSize: 10 } : skipToken,
@@ -42,30 +39,14 @@ const GameSearch: React.FC = () => {
     setSearchQuery(null)
   }
 
-  useEffect(() => {
-    console.log("games", searchGameDetails)
-    if (searchGameDetails) {
-      setAllGameDetails(prevState => [...prevState, ...searchGameDetails])
-    } else {
-      setAllGameDetails([])
-    }
-  }, [searchGameDetails])
-
-  useEffect(() => {
-    // setBggGameIds(games?.map(game => game.bgg_game_id).join(",") ?? null)
-    setBggGameIds("143085,155766,68448,316377,331815,316382,316378,423428,331817,316380")
-    setBggGameIds("423426,379939,173346,309116,348601,202976,310215,196339,186069,134277")
-  }, [games, setBggGameIds])
-
   const handleGameSelect = (game: BaseGame) => {
     setSelectedBggGameId(game.bgg_game_id)
     setOpenDrawer(true)
   }
 
   useEffect(() => {
-    if (!!bggGameDetails) {
+    if (bggGameDetails && bggGameDetails.length > 0) {
       const game = bggGameDetails.filter(g => g.bgg_game_id === selectedBggGameId)[0]
-      console.log("game to add", game)
       addGame({
         name: game.name ?? "",
         year_published: game.year_published ?? null,
@@ -78,7 +59,7 @@ const GameSearch: React.FC = () => {
         bgg_game_id: game.bgg_game_id ?? 0,
       } as AddGameRequest)
     }
-  }, [bggGameDetails, addGame])
+  }, [bggGameDetails, addGame, selectedBggGameId])
 
   return (
     <>
@@ -97,18 +78,14 @@ const GameSearch: React.FC = () => {
         <Table className='w-full'>
           <TableHeader>
             <TableRow>
-              <TableHead></TableHead>
               <TableHead>BGG ID</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Year Published</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {allGameDetails?.map(game => (
+            {games?.map(game => (
               <TableRow key={game.bgg_game_id} className='cursor-pointer' onClick={() => handleGameSelect(game)}>
-                <TableCell className='flex items-center justify-center'>
-                  {game.thumbnail && <img src={game.thumbnail} alt={game.name} className='w-auto' />}
-                </TableCell>
                 <TableCell>{game.bgg_game_id}</TableCell>
                 <TableCell>{game.name}</TableCell>
                 <TableCell>{game.year_published}</TableCell>

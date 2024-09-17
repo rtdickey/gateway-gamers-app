@@ -28,7 +28,7 @@ const useSession = () => {
     return () => subscription.unsubscribe()
   }, [])
 
-  return { session: currentSession, handleSignOut, isAuthenticated: !!currentSession }
+  return { session: currentSession, user: currentSession?.user, handleSignOut, isAuthenticated: !!currentSession }
 }
 
 export default useSession

@@ -17,7 +17,6 @@ const Profile: React.FC = () => {
     isLoading: userDetailsLoading,
     isError: userDetailsError,
   } = useGetUserDetailsQuery(user ? { id: user.id } : skipToken)
-  console.log(userDetails)
 
   return (
     <div className='w-full max-w-xs m-auto'>
