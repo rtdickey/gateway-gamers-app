@@ -7,7 +7,7 @@ import { Input } from "components/Input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
 import { useGetBoardGamesByIdQuery, useGetBoardGameBySearchQuery } from "services/bggApi"
 import { AddGameRequest, useAddGameMutation } from "services/gamesApi"
-import { BaseGame, Game } from "types"
+import { BaseGame } from "types"
 
 import GameDrawer from "../GameDrawer"
 
@@ -59,7 +59,7 @@ const GameSearch: React.FC = () => {
         bgg_game_id: game.bgg_game_id ?? 0,
       } as AddGameRequest)
     }
-  }, [bggGameDetails, addGame])
+  }, [bggGameDetails, addGame, selectedBggGameId])
 
   return (
     <>

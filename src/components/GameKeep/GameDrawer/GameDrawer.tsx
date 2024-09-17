@@ -33,7 +33,7 @@ const GameDrawer: React.FC<GameDrawerProps> = ({ open, setOpen, bggGameId }) => 
     if (selectedShelfId && game && user) {
       addUserGame({ gameId: game!.id, shelfId: selectedShelfId, userId: user!.id })
     }
-  }, [selectedShelfId])
+  }, [selectedShelfId, game, user, addUserGame])
 
   if (isDesktop) {
     return (
