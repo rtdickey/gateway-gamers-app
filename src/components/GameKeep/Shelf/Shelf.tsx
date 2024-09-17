@@ -2,6 +2,7 @@ import React from "react"
 
 import { skipToken } from "@reduxjs/toolkit/query"
 
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
 import { useGetUserGamesQuery } from "services/userGamesApi"
 import { Game } from "types"
 
@@ -11,52 +12,43 @@ interface ShelfProps {
 
 const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
   const { data: games } = useGetUserGamesQuery(shelfId.length ? shelfId : skipToken)
+
   return (
     <div className='flex-1 flex-col'>
       {shelfId && games ? (
-        <div>
-          {games.map((game, index) => {
-            console.log("game: ", JSON.stringify(game, null, 2))
-            const gameInfo = game.Games as unknown as Game
-            console.log("game: ", gameInfo)
-            return (
-              <div key={index} className='flex flex-row p-4 border rounded-md w-full'>
-                <div className='p-3'>
-                  {gameInfo?.thumbnail && <img src={gameInfo.thumbnail} alt={gameInfo?.name} className='h-20 m-auto' />}
-                </div>
-                <div className='p-3'>
-                  <h2 className='font-semibold'>{gameInfo.name}</h2>
-                  <ul>
-                    {gameInfo?.min_players && (
-                      <li className='text-sm'>
-                        <span className='me-2'>Mininum Players:</span>
-                        <span>{gameInfo.min_players}</span>
-                      </li>
-                    )}
-                    {gameInfo?.max_players && (
-                      <li>
-                        <span className='font-semibold me-2'>Maximum Players:</span>
-                        <span>{gameInfo.max_players}</span>
-                      </li>
-                    )}
-                    {gameInfo?.playing_time && (
-                      <li>
-                        <span className='font-semibold me-2'>Playing Time:</span>
-                        <span>{gameInfo.playing_time} minutes</span>
-                      </li>
-                    )}
-                    {gameInfo?.age && (
-                      <li>
-                        <span className='font-semibold me-2'>Ages:</span>
-                        <span>{gameInfo.age}+</span>
-                      </li>
-                    )}
-                  </ul>
-                </div>
-              </div>
-            )
-          })}
-        </div>
+        <Table className='w-full'>
+          <TableHeader>
+            <TableRow>
+              <TableHead></TableHead>
+              <TableHead>BGG ID</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Year Published</TableHead>
+              <TableHead>Players</TableHead>
+              <TableHead>Age</TableHead>
+              <TableHead>Playing Time</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {games?.map(game => {
+              const gameInfo = game.Games as unknown as Game
+              return (
+                <TableRow key={gameInfo.bgg_game_id}>
+                  <TableCell className='flex items-center justify-center'>
+                    {gameInfo.thumbnail && <img src={gameInfo.thumbnail} alt={gameInfo.name} className='w-auto' />}
+                  </TableCell>
+                  <TableCell>{gameInfo.bgg_game_id}</TableCell>
+                  <TableCell>{gameInfo.name}</TableCell>
+                  <TableCell>{gameInfo.year_published}</TableCell>
+                  <TableCell>
+                    {gameInfo.min_players}-{gameInfo.max_players}
+                  </TableCell>
+                  <TableCell>{gameInfo.age}+</TableCell>
+                  <TableCell>{gameInfo.playing_time}m</TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
       ) : (
         <div>Your shelf is empty!</div>
       )}

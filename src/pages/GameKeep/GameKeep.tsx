@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback } from "react"
 
 import { faDice, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -24,9 +24,12 @@ const GameKeep: React.FC = () => {
   const { data: shelves } = useShelves()
   const [selectedShelf, setSelectedShelf] = React.useState<string>(shelves?.[0].id.toString() ?? "")
 
-  const handleSelectCallback = (value: string) => {
-    setSelectedShelf(value)
-  }
+  const handleSelectCallback = useCallback(
+    (value: string) => {
+      setSelectedShelf(value)
+    },
+    [setSelectedShelf],
+  )
 
   const handleShowGameSearch = () => {
     setShowGameSearch(!showGameSearch)

@@ -1,4 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react"
+import { PostgrestError } from "@supabase/supabase-js"
 
 import { supabase } from "Supabase"
 import { UserGame } from "types"
@@ -37,7 +38,7 @@ const userGamesApi = createApi({
         const { data, error } = await supabase
           .from("UserGames")
           .select(
-            "id, game_id, Games (id, name, year_published, age, playing_time, min_players, max_players, bgg_game_id, thumbnail, image)",
+            "game_id, Games (id, name, year_published, age, playing_time, min_players, max_players, bgg_game_id, thumbnail, image)",
           )
           .eq("shelf_id", shelfId)
 
@@ -49,14 +50,14 @@ const userGamesApi = createApi({
       },
       providesTags: ["UserGames"],
     }),
-    addUserGame: builder.mutation<UserGame[], AddUserGameRequest>({
+    addUserGame: builder.mutation<PostgrestError | null, AddUserGameRequest>({
       queryFn: async ({ gameId, shelfId, userId }) => {
         const { data, error } = await supabase
           .from("UserGames")
-          .insert({ shelf_id: shelfId, game_id: gameId, user_id: userId })
-          .select(
-            "id, game_id, Games (id, name, year_published, age, playing_time, min_players, max_players, bgg_game_id, thumbnail, image)",
-          )
+          .upsert({ shelf_id: shelfId, game_id: gameId, user_id: userId })
+        // .select(
+        //   "id, game_id, Games (id, name, year_published, age, playing_time, min_players, max_players, bgg_game_id, thumbnail, image)",
+        // )
 
         if (error) {
           return { error }
