@@ -13,18 +13,18 @@ import useShelves from "hooks/useShelves"
 
 interface ShelfSelectProps {
   shelfId?: string
-  onValueChange?: (shelfId: string) => void
+  userGameId?: string
+  onValueChange?: (shelfId: string, id?: string) => void
 }
 
-const ShelfSelect: React.FC<ShelfSelectProps> = ({ shelfId, onValueChange }) => {
+const ShelfSelect: React.FC<ShelfSelectProps> = ({ shelfId, userGameId, onValueChange }) => {
   const { data: shelves } = useShelves()
   const [selectedShelf, setSelectedShelf] = useState<string | undefined>(shelfId)
 
-  console.log(shelfId)
   const handleOnValueChange = (value: string) => {
     setSelectedShelf(value)
     if (!!onValueChange) {
-      onValueChange(value)
+      onValueChange(value, userGameId)
     }
   }
 

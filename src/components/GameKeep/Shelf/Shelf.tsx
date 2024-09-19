@@ -6,7 +6,12 @@ import { skipToken } from "@reduxjs/toolkit/query"
 
 import Button from "components/Button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
-import { useGetUserGamesQuery, useDeleteUserGameMutation, useAddUserGameMutation } from "services/userGamesApi"
+import {
+  useGetUserGamesQuery,
+  useDeleteUserGameMutation,
+  useAddUserGameMutation,
+  useUpdateUserGameMutation,
+} from "services/userGamesApi"
 import { Game } from "types"
 
 import ShelfSelect from "../ShelfSelect"
@@ -19,22 +24,30 @@ const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
   const { data: games } = useGetUserGamesQuery(shelfId ? shelfId : skipToken)
   const [deleteUserGameApi] = useDeleteUserGameMutation()
   const [addUserGameApi] = useAddUserGameMutation()
+  const [updateUserGameApi] = useUpdateUserGameMutation()
 
   const handleDelete = useCallback(
-    async (gameId: string) => {
+    async (id: string) => {
       if (window.confirm("Are you sure you want to delete this game?")) {
-        await deleteUserGameApi({ gameId, shelfId: shelfId ? parseInt(shelfId) : -1 })
+        await deleteUserGameApi({ id })
       }
     },
-    [deleteUserGameApi, shelfId],
+    [deleteUserGameApi],
   )
 
   const handleUpdateShelf = useCallback(
-    async (newShelfId: string, gameId: string) => {
-      await addUserGameApi({ gameId, shelfId: parseInt(newShelfId) })
+    async (id: string, newShelfId: string) => {
+      await updateUserGameApi({ id, shelfId: parseInt(newShelfId) })
     },
     [addUserGameApi],
   )
+
+  const handleOnValueChange = (newShelfId: string, id?: string) => {
+    if (!!id) {
+      console.log("id", id)
+      handleUpdateShelf(id, newShelfId)
+    }
+  }
 
   return (
     <div className='flex-1 flex-col'>
@@ -80,7 +93,7 @@ const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
                   <TableCell>{gameInfo.age}+</TableCell>
                   <TableCell>{gameInfo.playing_time}m</TableCell>
                   <TableCell>
-                    <ShelfSelect shelfId={shelfId} />
+                    <ShelfSelect shelfId={shelfId} onValueChange={handleOnValueChange} userGameId={game.id} />
                   </TableCell>
                   <TableCell>
                     <div className='flex items-center justify-center gap-x-4'>
@@ -92,7 +105,7 @@ const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
                       >
                         BGG
                       </a>
-                      <Button variant='destructive' onClick={() => handleDelete(game.game_id)} size='sm'>
+                      <Button variant='destructive' onClick={() => handleDelete(game.id)} size='sm'>
                         <FontAwesomeIcon icon={faTrash} />
                       </Button>
                     </div>
