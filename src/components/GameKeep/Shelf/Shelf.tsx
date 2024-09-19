@@ -6,12 +6,7 @@ import { skipToken } from "@reduxjs/toolkit/query"
 
 import Button from "components/Button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
-import {
-  useGetUserGamesQuery,
-  useDeleteUserGameMutation,
-  useAddUserGameMutation,
-  useUpdateUserGameMutation,
-} from "services/userGamesApi"
+import { useGetUserGamesQuery, useDeleteUserGameMutation, useUpdateUserGameMutation } from "services/userGamesApi"
 import { Game } from "types"
 
 import ShelfSelect from "../ShelfSelect"
@@ -23,7 +18,6 @@ interface ShelfProps {
 const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
   const { data: games } = useGetUserGamesQuery(shelfId ? shelfId : skipToken)
   const [deleteUserGameApi] = useDeleteUserGameMutation()
-  const [addUserGameApi] = useAddUserGameMutation()
   const [updateUserGameApi] = useUpdateUserGameMutation()
 
   const handleDelete = useCallback(
@@ -39,7 +33,7 @@ const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
     async (id: string, newShelfId: string) => {
       await updateUserGameApi({ id, shelfId: parseInt(newShelfId) })
     },
-    [addUserGameApi],
+    [updateUserGameApi],
   )
 
   const handleOnValueChange = (newShelfId: string, id?: string) => {
