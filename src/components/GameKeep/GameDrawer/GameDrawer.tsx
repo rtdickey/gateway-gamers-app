@@ -31,7 +31,7 @@ const GameDrawer: React.FC<GameDrawerProps> = ({ open, setOpen, bggGameId }) => 
 
   useEffect(() => {
     if (selectedShelfId && game && user) {
-      addUserGame({ gameId: game!.id, shelfId: selectedShelfId, userId: user!.id })
+      addUserGame({ gameId: game!.id, shelfId: selectedShelfId })
     }
   }, [selectedShelfId, game, user, addUserGame])
 
@@ -63,7 +63,7 @@ const GameDrawer: React.FC<GameDrawerProps> = ({ open, setOpen, bggGameId }) => 
                   <li>Age: {game.age}+</li>
                 </ul>
               </div>
-              <ShelfSelect onSelect={onShelfSelect} />
+              <ShelfSelect onValueChange={onShelfSelect} />
             </DialogContent>
           </Dialog>
         )}
@@ -102,7 +102,7 @@ const GameDrawer: React.FC<GameDrawerProps> = ({ open, setOpen, bggGameId }) => 
                 <li>Playing Time: {game.playing_time}m</li>
                 <li>Age: {game.age}+</li>
               </ul>
-              <ShelfSelect />
+              <ShelfSelect onValueChange={onShelfSelect} />
             </div>
             <DrawerFooter className='pt-2'>
               <Button variant='outline' onClick={() => setOpen(false)}>

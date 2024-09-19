@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useState } from "react"
 
 import {
   Select,
@@ -13,20 +13,23 @@ import useShelves from "hooks/useShelves"
 
 interface ShelfSelectProps {
   shelfId?: string
-  onSelect?: (shelfId: string) => void
+  userGameId?: string
+  onValueChange?: (shelfId: string, id?: string) => void
 }
 
-const ShelfSelect: React.FC<ShelfSelectProps> = ({ shelfId, onSelect }) => {
+const ShelfSelect: React.FC<ShelfSelectProps> = ({ shelfId, userGameId, onValueChange }) => {
   const { data: shelves } = useShelves()
+  const [selectedShelf, setSelectedShelf] = useState<string | undefined>(shelfId)
 
-  useEffect(() => {
-    if (!!onSelect) {
-      onSelect(shelves?.[0].id.toString() ?? "")
+  const handleOnValueChange = (value: string) => {
+    setSelectedShelf(value)
+    if (!!onValueChange) {
+      onValueChange(value, userGameId)
     }
-  }, [shelves, onSelect])
+  }
 
   return (
-    <Select onValueChange={onSelect} value={shelfId}>
+    <Select onValueChange={handleOnValueChange} value={selectedShelf}>
       <SelectTrigger className='w-[180px]'>
         <SelectValue placeholder='Select a shelf' />
       </SelectTrigger>

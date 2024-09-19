@@ -15,6 +15,7 @@ export interface Game extends BaseGame {
 }
 
 export interface UserGame {
+  id: string
   game_id: string
   Games: Game[]
 }
