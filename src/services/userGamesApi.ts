@@ -6,15 +6,14 @@ import { UserGame } from "types"
 
 import { supabaseBaseQuery } from "./supabaseBaseQuery"
 
-interface DeleteUserGameRequest {
+interface AddUserGameRequest {
   gameId: string
   shelfId: number
 }
 
-interface AddUserGameRequest {
+interface DeleteUserGameRequest {
   gameId: string
   shelfId: number
-  userId: string
 }
 
 const userGamesApi = createApi({
@@ -56,10 +55,8 @@ const userGamesApi = createApi({
       providesTags: ["UserGames"],
     }),
     addUserGame: builder.mutation<PostgrestError | null, AddUserGameRequest>({
-      queryFn: async ({ gameId, shelfId, userId }) => {
-        const { data, error } = await supabase
-          .from("UserGames")
-          .upsert({ shelf_id: shelfId, game_id: gameId, user_id: userId })
+      queryFn: async ({ gameId, shelfId }) => {
+        const { data, error } = await supabase.from("UserGames").upsert({ shelf_id: shelfId, game_id: gameId })
 
         if (error) {
           return { error }

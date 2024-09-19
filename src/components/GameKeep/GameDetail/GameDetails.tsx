@@ -14,7 +14,7 @@ interface GameProps {
 }
 
 const GameDetails: React.FC<GameProps> = ({ game, handleOnClickCancel }) => {
-  const { session, isAuthenticated } = useSession()
+  const { isAuthenticated } = useSession()
   const [addGameToShelf] = useAddUserGameMutation()
   const [selectedShelf, setSelectedShelf] = useState<string | null>(null)
 
@@ -27,8 +27,8 @@ const GameDetails: React.FC<GameProps> = ({ game, handleOnClickCancel }) => {
   }
 
   const handleAddGameToShelf = () => {
-    if (!!selectedShelf && game?.id && session?.user.id) {
-      addGameToShelf({ shelfId: parseInt(selectedShelf), gameId: game?.id ?? "", userId: session?.user.id })
+    if (!!selectedShelf && game?.id) {
+      addGameToShelf({ shelfId: parseInt(selectedShelf), gameId: game?.id ?? "" })
       handleOnClickCancel()
     }
   }
@@ -80,7 +80,7 @@ const GameDetails: React.FC<GameProps> = ({ game, handleOnClickCancel }) => {
               </ul>
             </div>
             <div className='flex justify-center mt-5 mb-3'>
-              <ShelfSelect onSelect={handleOnShelfSelect} />
+              <ShelfSelect onValueChange={handleOnShelfSelect} />
             </div>
           </div>
         ) : (
