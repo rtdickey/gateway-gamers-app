@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 
 import bggLogo from "assets/powered_by_bgg.webp"
-import Nav2 from "components/Nav/Nav2"
+import Nav from "components/Nav"
 
 import "gatewaygamers.css"
 
@@ -9,7 +9,7 @@ const Layout = () => {
   const year = new Date().getFullYear()
   return (
     <>
-      <Nav2 />
+      <Nav />
       <div className='flex'>
         <div className='flex-1 min-h-screen'>
           <div className='p-7 flex-1 h-full'>
