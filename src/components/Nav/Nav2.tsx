@@ -7,20 +7,19 @@ import logo from "assets/gateway-gamers-logo.png"
 import useSession from "hooks/Supabase/useSession"
 import { useGetUserDetailsQuery } from "services/userApi"
 
-const navigation = [
-  { name: "Game Keep", href: "/GameKeep", current: false, auth: true, hideWhenAuthenticated: false },
-  { name: "About", href: "/", current: true, auth: false, hideWhenAuthenticated: false },
-  { name: "Login", href: "/Login", current: false, auth: false, hideWhenAuthenticated: true },
-]
-
 const Nav2 = () => {
   const { isAuthenticated, handleSignOut, session } = useSession()
   const user = session?.user
   const { data: userDetails } = useGetUserDetailsQuery(user ? { id: user.id } : skipToken)
   const userDisplayName = userDetails?.display_name.slice(0, 1) ?? "GG"
 
-  const unauthenticatedNavigation = navigation.filter(item => !item.auth)
-  const authenticatedNavigation = navigation.filter(item => !item.hideWhenAuthenticated)
+  const navigation = [
+    { name: "Login", href: "/Login", show: !isAuthenticated },
+    { name: "Game Keep", href: "/GameKeep", show: isAuthenticated },
+    { name: "About", href: "/", show: true },
+  ]
+
+  const navlinks = navigation.filter(item => item.show)
   return (
     <Disclosure as='nav' className='bg-secondary'>
       <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
@@ -40,38 +39,20 @@ const Nav2 = () => {
             </div>
             <div className='hidden sm:ml-6 sm:block'>
               <div className='flex space-x-4'>
-                {!isAuthenticated &&
-                  unauthenticatedNavigation.map(item => (
-                    <NavLink
-                      to={item.href}
-                      key={item.name}
-                      className={({ isActive }) =>
-                        [
-                          isActive ? "bg-accent text-gray-800" : "text-gray-800 hover:bg-accent hover:text-gray-800",
-                          "rounded-md px-3 py-2 text-sm font-medium",
-                        ].join(" ")
-                      }
-                    >
-                      {item.name}
-                    </NavLink>
-                  ))}
-                {isAuthenticated &&
-                  authenticatedNavigation.map(item => {
-                    return (
-                      <NavLink
-                        to={item.href}
-                        key={item.name}
-                        className={({ isActive }) =>
-                          [
-                            isActive ? "bg-accent text-gray-800" : "text-gray-800 hover:bg-accent hover:text-gray-800",
-                            "rounded-md px-3 py-2 text-sm font-medium",
-                          ].join(" ")
-                        }
-                      >
-                        {item.name}
-                      </NavLink>
-                    )
-                  })}
+                {navlinks.map(item => (
+                  <NavLink
+                    to={item.href}
+                    key={item.name}
+                    className={({ isActive }) =>
+                      [
+                        isActive ? "bg-accent text-gray-800" : "text-gray-800 hover:bg-accent hover:text-gray-800",
+                        "rounded-md px-3 py-2 text-sm font-medium",
+                      ].join(" ")
+                    }
+                  >
+                    {item.name}
+                  </NavLink>
+                ))}
               </div>
             </div>
           </div>
@@ -114,36 +95,20 @@ const Nav2 = () => {
 
       <DisclosurePanel className='sm:hidden'>
         <div className='space-y-1 px-2 pb-3 pt-2 flex flex-col'>
-          {!isAuthenticated &&
-            unauthenticatedNavigation.map(item => (
-              <NavLink
-                to={item.href}
-                key={item.name}
-                className={({ isActive }) =>
-                  [
-                    isActive ? "bg-accent text-gray-800" : "flex-1 text-gray-800 hover:bg-accent hover:text-gray-800",
-                    "rounded-md px-3 py-2 text-sm font-medium",
-                  ].join(" ")
-                }
-              >
-                {item.name}
-              </NavLink>
-            ))}
-          {isAuthenticated &&
-            authenticatedNavigation.map(item => (
-              <NavLink
-                to={item.href}
-                key={item.name}
-                className={({ isActive }) =>
-                  [
-                    isActive ? "bg-accent text-gray-800" : "flex-1 text-gray-800 hover:bg-accent hover:text-gray-800",
-                    "rounded-md px-3 py-2 text-sm font-medium",
-                  ].join(" ")
-                }
-              >
-                {item.name}
-              </NavLink>
-            ))}
+          {navlinks.map(item => (
+            <NavLink
+              to={item.href}
+              key={item.name}
+              className={({ isActive }) =>
+                [
+                  isActive ? "bg-accent text-gray-800" : "flex-1 text-gray-800 hover:bg-accent hover:text-gray-800",
+                  "rounded-md px-3 py-2 text-sm font-medium",
+                ].join(" ")
+              }
+            >
+              {item.name}
+            </NavLink>
+          ))}
         </div>
       </DisclosurePanel>
     </Disclosure>
