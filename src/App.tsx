@@ -3,7 +3,7 @@ import { ToastContainer } from "react-toastify"
 
 import Layout from "components/Layout"
 import ProtectedRoute from "components/ProtectedRoute/ProtectedRoute"
-import useSession from "hooks/Supabase/useSession"
+import { useSession } from "hooks/Supabase/useSession"
 import GameKeep from "pages/GameKeep"
 import Home from "pages/Home"
 import Login from "pages/Login"
@@ -17,7 +17,7 @@ function App() {
   const { isAuthenticated } = useSession()
 
   return (
-    <div className='App'>
+    <div className='App' data-testid='app'>
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />

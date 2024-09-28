@@ -6,7 +6,7 @@ import { skipToken } from "@reduxjs/toolkit/query"
 import Button from "components/ui/Button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "components/ui/Dialog"
 import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "components/ui/Drawer"
-import useSession from "hooks/Supabase/useSession"
+import { useSession } from "hooks/Supabase/useSession"
 import { useGetGamesByBggGameIdQuery } from "services/gamesApi"
 import { useAddUserGameMutation } from "services/userGamesApi"
 

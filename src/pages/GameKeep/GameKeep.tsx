@@ -9,7 +9,7 @@ import GameSearch from "components/GameKeep/GameSearch"
 import Shelf from "components/GameKeep/Shelf"
 import ShelfSelect from "components/GameKeep/ShelfSelect"
 import Button from "components/ui/Button"
-import useSession from "hooks/Supabase/useSession"
+import { useSession } from "hooks/Supabase/useSession"
 import useShelves from "hooks/useShelves"
 import { useGetUserDetailsQuery } from "services/userApi"
 

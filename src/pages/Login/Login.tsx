@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 
 import { SignIn, VerifyCode } from "components/Login"
-import useSession from "hooks/Supabase/useSession"
+import { useSession } from "hooks/Supabase/useSession"
 import { supabase } from "Supabase"
 
 const Login: React.FC = () => {

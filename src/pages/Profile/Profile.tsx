@@ -5,7 +5,7 @@ import { skipToken } from "@reduxjs/toolkit/query"
 import EditProfileDetails from "components/Profile/EditProfileDetails"
 import ProfileDetails from "components/Profile/ProfileDetails"
 import Button from "components/ui/Button"
-import useSession from "hooks/Supabase/useSession"
+import { useSession } from "hooks/Supabase/useSession"
 import { useGetUserDetailsQuery } from "services/userApi"
 
 const Profile: React.FC = () => {

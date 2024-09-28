@@ -4,7 +4,7 @@ import { skipToken } from "@reduxjs/toolkit/query"
 import { NavLink } from "react-router-dom"
 
 import logo from "assets/gateway-gamers-logo.png"
-import useSession from "hooks/Supabase/useSession"
+import { useSession } from "hooks/Supabase/useSession"
 import { useGetUserDetailsQuery } from "services/userApi"
 
 const Nav = () => {

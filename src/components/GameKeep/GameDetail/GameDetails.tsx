@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react"
 
 import Button from "components/ui/Button"
 import { DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "components/ui/Drawer"
-import useSession from "hooks/Supabase/useSession"
+import { useSession } from "hooks/Supabase/useSession"
 import { useAddUserGameMutation } from "services/userGamesApi"
 import { Game } from "types"
 

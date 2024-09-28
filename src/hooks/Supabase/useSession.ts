@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 import { supabase } from "Supabase"
 
-const useSession = () => {
+export const useSession = () => {
   const [currentSession, setCurrentSession] = useState<Session | null>(null)
   const navigate = useNavigate()
 
@@ -30,5 +30,3 @@ const useSession = () => {
 
   return { session: currentSession, user: currentSession?.user, handleSignOut, isAuthenticated: !!currentSession }
 }
-
-export default useSession
