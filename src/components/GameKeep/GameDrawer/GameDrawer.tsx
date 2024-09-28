@@ -37,19 +37,15 @@ const GameDrawer: React.FC<GameDrawerProps> = ({ open, setOpen, bggGameId }) => 
 
   if (isDesktop) {
     return (
-      <>
-        {!game ? (
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className='sm:max-w-[425px]'>
-              <DialogHeader>
-                <DialogTitle>Game Details Not Found</DialogTitle>
-                <DialogDescription>Where is it?</DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
-        ) : (
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className='sm:max-w-[425px]'>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className='sm:max-w-[425px]'>
+          {!game ? (
+            <DialogHeader>
+              <DialogTitle>Game Details Not Found</DialogTitle>
+              <DialogDescription>Where is it?</DialogDescription>
+            </DialogHeader>
+          ) : (
+            <>
               <DialogHeader>
                 <DialogTitle>{game?.name}</DialogTitle>
                 <DialogDescription>{game?.year_published}</DialogDescription>
@@ -64,18 +60,18 @@ const GameDrawer: React.FC<GameDrawerProps> = ({ open, setOpen, bggGameId }) => 
                 </ul>
               </div>
               <ShelfSelect onValueChange={onShelfSelect} />
-            </DialogContent>
-          </Dialog>
-        )}
-      </>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     )
   }
 
   return (
-    <>
-      {!game ? (
-        <Drawer open={open} onOpenChange={setOpen}>
-          <DrawerContent>
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerContent>
+        {!game ? (
+          <>
             <DrawerHeader className='text-left'>
               <DrawerTitle>Game Details Not Found</DrawerTitle>
               <DrawerDescription>Where is it?</DrawerDescription>
@@ -85,34 +81,40 @@ const GameDrawer: React.FC<GameDrawerProps> = ({ open, setOpen, bggGameId }) => 
                 Cancel
               </Button>
             </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
-      ) : (
-        <Drawer open={open} onOpenChange={setOpen}>
-          <DrawerContent>
-            <DrawerHeader className='text-left'>
-              <DrawerTitle>{game?.name}</DrawerTitle>
-              <DrawerDescription>{game?.year_published}</DrawerDescription>
-            </DrawerHeader>
-            <div className='flex flex-col '>
-              {!!game.thumbnail && <img src={game.thumbnail} className='w-40 h-40' alt={game.name} />}
-              <ul>
-                <li>Min Players: {game.min_players}</li>
-                <li>Max Players: {game.max_players}</li>
-                <li>Playing Time: {game.playing_time}m</li>
-                <li>Age: {game.age}+</li>
-              </ul>
-              <ShelfSelect onValueChange={onShelfSelect} />
+          </>
+        ) : (
+          <div className='flex justify-center'>
+            <div className='flex flex-col gap-y-4'>
+              <div>
+                <DrawerHeader>
+                  <DrawerTitle>{game?.name}</DrawerTitle>
+                  <DrawerDescription>{game?.year_published}</DrawerDescription>
+                </DrawerHeader>
+                <div className='flex flex-col'>
+                  <div className='flex flex-row gap-x-4'>
+                    {!!game.thumbnail && <img src={game.thumbnail} className='w-40 h-40' alt={game.name} />}
+                    <div className='flex flex-col gap-y-4'>
+                      <ul className='ps-4'>
+                        <li>Min Players: {game.min_players}</li>
+                        <li>Max Players: {game.max_players}</li>
+                        <li>Playing Time: {game.playing_time}m</li>
+                        <li>Age: {game.age}+</li>
+                      </ul>
+                      <ShelfSelect onValueChange={onShelfSelect} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <DrawerFooter className='pt-2'>
+                <Button variant='outline' onClick={() => setOpen(false)}>
+                  Cancel
+                </Button>
+              </DrawerFooter>
             </div>
-            <DrawerFooter className='pt-2'>
-              <Button variant='outline' onClick={() => setOpen(false)}>
-                Cancel
-              </Button>
-            </DrawerFooter>
-          </DrawerContent>
-        </Drawer>
-      )}
-    </>
+          </div>
+        )}
+      </DrawerContent>
+    </Drawer>
   )
 }
 

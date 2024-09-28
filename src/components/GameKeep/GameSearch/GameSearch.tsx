@@ -63,15 +63,13 @@ const GameSearch: React.FC = () => {
 
   return (
     <>
-      <div>
-        <Input placeholder='Search BGG' value={searchInput} onChange={handleOnChange} />
-      </div>
-      <div className='flex justify-items-end m-2'>
-        <Button variant='ghostSecondary' size='sm' onClick={handleSearch}>
-          Search
-        </Button>
+      <Input placeholder='Search BGG' value={searchInput} onChange={handleOnChange} />
+      <div className='flex justify-end gap-x-2 p-2'>
         <Button variant='ghost' size='sm' onClick={handleClear}>
           Clear
+        </Button>
+        <Button variant='ghostSecondary' size='sm' onClick={handleSearch}>
+          Search
         </Button>
       </div>
       {searchQuery && (
