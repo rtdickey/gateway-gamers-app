@@ -2,9 +2,9 @@ import React from "react"
 
 import { Check, ChevronsUpDown } from "lucide-react"
 
-import Button from "components/Button"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "components/Command"
-import { Popover, PopoverContent, PopoverTrigger } from "components/Popover"
+import Button from "components/ui/Button"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "components/ui/Command"
+import { Popover, PopoverContent, PopoverTrigger } from "components/ui/Popover"
 import { cn } from "lib/utils"
 
 export interface ComboboxOptions {

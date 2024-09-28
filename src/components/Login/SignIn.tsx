@@ -1,7 +1,7 @@
 import { toast } from "react-toastify"
 
 import logo from "assets/gateway-gamers-logo.png"
-import Button from "components/Button"
+import Button from "components/ui/Button"
 import { supabase } from "Supabase"
 
 interface SignInProps {
