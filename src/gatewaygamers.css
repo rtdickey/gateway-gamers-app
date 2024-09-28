@@ -856,6 +856,10 @@ body:is(.dark *) {
   height: 1px;
 }
 
+.h-20 {
+  height: 5rem;
+}
+
 .max-h-96 {
   max-height: 24rem;
 }
@@ -1072,6 +1076,18 @@ body:is(.dark *) {
   column-gap: 1rem;
 }
 
+.gap-y-1 {
+  row-gap: 0.25rem;
+}
+
+.gap-y-2 {
+  row-gap: 0.5rem;
+}
+
+.gap-y-4 {
+  row-gap: 1rem;
+}
+
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -1096,6 +1112,10 @@ body:is(.dark *) {
   margin-bottom: calc(0.375rem * var(--tw-space-y-reverse));
 }
 
+.self-center {
+  align-self: center;
+}
+
 .overflow-auto {
   overflow: auto;
 }
@@ -1104,20 +1124,12 @@ body:is(.dark *) {
   overflow: hidden;
 }
 
-.overflow-x-auto {
-  overflow-x: auto;
-}
-
 .overflow-y-auto {
   overflow-y: auto;
 }
 
 .overflow-x-hidden {
   overflow-x: hidden;
-}
-
-.overflow-x-scroll {
-  overflow-x: scroll;
 }
 
 .whitespace-nowrap {
@@ -1243,14 +1255,6 @@ body:is(.dark *) {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-inherit {
-  background-color: inherit;
-}
-
-.bg-current {
-  background-color: currentColor;
-}
-
 .p-0 {
   padding: 0px;
 }
@@ -1354,6 +1358,14 @@ body:is(.dark *) {
 
 .pt-6 {
   padding-top: 1.5rem;
+}
+
+.ps-2 {
+  padding-inline-start: 0.5rem;
+}
+
+.ps-4 {
+  padding-inline-start: 1rem;
 }
 
 .text-left {
