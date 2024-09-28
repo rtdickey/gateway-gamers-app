@@ -56,7 +56,7 @@ const GameKeep: React.FC = () => {
         )}
       </div>
       <hr className='border-1 border-accent mt-5 mb-5' />
-      <div className='flex'>
+      <div>
         {!userDetails ? (
           <span>
             Finish updating your profile to start using Game Keep.
