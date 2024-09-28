@@ -4,8 +4,8 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { skipToken } from "@reduxjs/toolkit/query"
 
-import Button from "components/Button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
+import Button from "components/ui/Button"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/ui/Table"
 import { useGetUserGamesQuery, useDeleteUserGameMutation, useUpdateUserGameMutation } from "services/userGamesApi"
 import { Game } from "types"
 

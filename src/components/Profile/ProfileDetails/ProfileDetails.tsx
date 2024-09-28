@@ -1,4 +1,4 @@
-import { Card, CardContent } from "components/Card"
+import { Card, CardContent } from "components/ui/Card"
 import { User } from "types"
 
 interface ProfileDetailsProps {

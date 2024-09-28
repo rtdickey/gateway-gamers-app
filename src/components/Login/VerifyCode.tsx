@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 import logo from "assets/gateway-gamers-logo.png"
-import Button from "components/Button"
+import Button from "components/ui/Button"
 
 interface VerifyCodeProps {
   handleVerifyCode: (value: string) => void
