@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from "react"
 
 import { skipToken } from "@reduxjs/toolkit/query"
 
-import Button from "components/Button"
-import { Input } from "components/Input"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
+import Button from "components/ui/Button"
+import { Input } from "components/ui/Input"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/ui/Table"
 import { useGetBoardGamesByIdQuery, useGetBoardGameBySearchQuery } from "services/bggApi"
 import { AddGameRequest, useAddGameMutation } from "services/gamesApi"
 import { BaseGame } from "types"

@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { skipToken } from "@reduxjs/toolkit/query"
 import { useNavigate } from "react-router-dom"
 
-import Button from "components/Button"
 import GameSearch from "components/GameKeep/GameSearch"
 import Shelf from "components/GameKeep/Shelf"
 import ShelfSelect from "components/GameKeep/ShelfSelect"
+import Button from "components/ui/Button"
 import useSession from "hooks/Supabase/useSession"
 import useShelves from "hooks/useShelves"
 import { useGetUserDetailsQuery } from "services/userApi"
@@ -56,7 +56,7 @@ const GameKeep: React.FC = () => {
         )}
       </div>
       <hr className='border-1 border-accent mt-5 mb-5' />
-      <div className='flex'>
+      <div>
         {!userDetails ? (
           <span>
             Finish updating your profile to start using Game Keep.

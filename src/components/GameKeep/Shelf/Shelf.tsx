@@ -4,8 +4,8 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { skipToken } from "@reduxjs/toolkit/query"
 
-import Button from "components/Button"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/Table"
+import Button from "components/ui/Button"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "components/ui/Table"
 import { useGetUserGamesQuery, useDeleteUserGameMutation, useUpdateUserGameMutation } from "services/userGamesApi"
 import { Game } from "types"
 
@@ -49,9 +49,8 @@ const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
         <Table className='w-full'>
           <TableHeader>
             <TableRow>
-              <TableHead></TableHead>
-              <TableHead>BGG ID</TableHead>
-              <TableHead>Name</TableHead>
+              <TableHead className='sticky left-0 bg-white'></TableHead>
+              <TableHead className='sticky left-0 bg-white'>Name</TableHead>
               <TableHead>Year Published</TableHead>
               <TableHead>Players</TableHead>
               <TableHead>Age</TableHead>
@@ -65,7 +64,7 @@ const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
               const gameInfo = game.Games as unknown as Game
               return (
                 <TableRow key={gameInfo.bgg_game_id}>
-                  <TableCell>
+                  <TableCell className='sticky left-0 bg-white'>
                     {gameInfo.thumbnail && (
                       <div className='flex items-center justify-center'>
                         <img
@@ -78,8 +77,7 @@ const Shelf: React.FC<ShelfProps> = ({ shelfId }) => {
                       </div>
                     )}
                   </TableCell>
-                  <TableCell>{gameInfo.bgg_game_id}</TableCell>
-                  <TableCell>{gameInfo.name}</TableCell>
+                  <TableCell className='sticky left-0 bg-white'>{gameInfo.name}</TableCell>
                   <TableCell>{gameInfo.year_published}</TableCell>
                   <TableCell>
                     {gameInfo.min_players}-{gameInfo.max_players}

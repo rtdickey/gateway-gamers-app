@@ -2,9 +2,9 @@ import React from "react"
 
 import { skipToken } from "@reduxjs/toolkit/query"
 
-import Button from "components/Button"
 import EditProfileDetails from "components/Profile/EditProfileDetails"
 import ProfileDetails from "components/Profile/ProfileDetails"
+import Button from "components/ui/Button"
 import useSession from "hooks/Supabase/useSession"
 import { useGetUserDetailsQuery } from "services/userApi"
 

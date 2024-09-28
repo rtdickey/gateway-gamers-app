@@ -3,7 +3,6 @@ import React from "react"
 import { NavLink } from "react-router-dom"
 
 interface NavItemProps {
-  menuId: string
   title: string
   gap?: boolean
   path: string
@@ -11,7 +10,7 @@ interface NavItemProps {
   showTitle: boolean
 }
 
-const NavItem: React.FC<NavItemProps> = ({ menuId, title, gap = false, path, icon, showTitle }) => {
+const NavItem: React.FC<NavItemProps> = ({ title, gap = false, path, icon, showTitle }) => {
   return (
     <NavLink to={path}>
       {({ isActive }) => (

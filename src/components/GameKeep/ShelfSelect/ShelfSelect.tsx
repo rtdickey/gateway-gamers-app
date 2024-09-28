@@ -8,7 +8,7 @@ import {
   SelectGroup,
   SelectLabel,
   SelectItem,
-} from "components/Select"
+} from "components/ui/Select"
 import useShelves from "hooks/useShelves"
 
 interface ShelfSelectProps {
