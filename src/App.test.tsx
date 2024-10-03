@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react"
+import { renderWithProviders } from "utils/test-utils"
 import "@testing-library/jest-dom"
 
 import * as UseSession from "hooks/Supabase/useSession"
 
 import App from "./App"
 import { MemoryRouter } from "react-router-dom"
-import { Provider } from "react-redux"
-import store from "store"
+import { setupStore } from "store/store"
 
 describe("App", () => {
   beforeEach(() => {
@@ -16,12 +16,13 @@ describe("App", () => {
   })
 
   it("should render the component", () => {
-    render(
+    const store = setupStore()
+
+    renderWithProviders(
       <MemoryRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
+        <App />
       </MemoryRouter>,
+      { preloadedState: store.getState() },
     )
 
     const app = screen.getByTestId("app")
