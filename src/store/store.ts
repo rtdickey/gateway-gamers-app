@@ -20,7 +20,7 @@ const persistConfig = {
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-export const setupStore = (preloadedState?: RootState<any, any, any>) => {
+export const store = (preloadedState?: RootState<any, any, any>) => {
   return configureStore({
     reducer: persistedReducer,
     middleware: getDefaultMiddleware =>
@@ -39,5 +39,7 @@ export const setupStore = (preloadedState?: RootState<any, any, any>) => {
 }
 
 export type RootStore = ReturnType<typeof rootReducer>
-export type AppStore = ReturnType<typeof setupStore>
+export type AppStore = ReturnType<typeof store>
 export type AppDispatch = AppStore["dispatch"]
+
+export default store

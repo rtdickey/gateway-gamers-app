@@ -6,7 +6,7 @@ import * as UseSession from "hooks/Supabase/useSession"
 
 import App from "./App"
 import { MemoryRouter } from "react-router-dom"
-import { setupStore } from "store/store"
+import * as Store from "store/store"
 
 describe("App", () => {
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe("App", () => {
   })
 
   it("should render the component", () => {
-    const store = setupStore()
+    const store = Store.default()
 
     renderWithProviders(
       <MemoryRouter>

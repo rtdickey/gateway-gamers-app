@@ -3,7 +3,7 @@ import { render } from "@testing-library/react"
 import type { RenderOptions } from "@testing-library/react"
 import { Provider } from "react-redux"
 
-import { setupStore } from "store/store"
+import * as SetupStore from "store/store"
 import type { RootStore, AppStore } from "store/store"
 // As a basic setup, import your same slice reducers
 
@@ -18,7 +18,7 @@ export function renderWithProviders(ui: React.ReactElement, extendedRenderOption
   const {
     preloadedState = {},
     // Automatically create a store instance if no store was passed in
-    store = setupStore(preloadedState),
+    store = SetupStore.default(preloadedState),
     ...renderOptions
   } = extendedRenderOptions
 
